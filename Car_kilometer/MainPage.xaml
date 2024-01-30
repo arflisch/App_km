@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Car_kilometer.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label Text="Pseudo"
+               FontSize="80"
+               HorizontalOptions="Center"
+               Grid.ColumnSpan="2"/>
+
+        <Label Text="0"
+               FontSize="50"
+               Grid.Row="1"
+               HorizontalOptions="Center"
+               />
+
+        <Label Text="Total Km"
+               FontSize="24"
+               Grid.Row="1"
+               HorizontalOptions="Center"
+               VerticalOptions="End"/>
+
+        <Label Text="0"
+               FontSize="50"
+               Grid.Row="1"
+               Grid.Column="1"
+               HorizontalOptions="Center"
+               />
+
+        <Label Text="Total Ride"
+               FontSize="24"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               Grid.Row="1"
+               Grid.Column="1"/>
+
+        <Label Text="0"
+               FontSize="50"
+               Grid.Row="2"
+               HorizontalOptions="Center"
+               />
+
+        <Label Text="Total Time"
+               FontSize="24"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               Grid.Row="2"
+               />
+
+        <Rectangle Fill="Gray"
+                   Grid.Row="3"
+                   Grid.ColumnSpan="2"/>
+
+    </Grid>
+
+</ContentPage>

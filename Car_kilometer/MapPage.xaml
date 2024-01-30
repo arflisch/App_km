@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Car_kilometer.MapPage"
+             Title="MapPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="550"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="0"
+                   FontSize="80"
+                   Grid.Row="0"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   />
+
+            <Label  Text="Km"
+                    FontSize="24"
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"/>
+
+            <Label Text="0"
+                   FontSize="80"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <Label Text="Km/h"
+                   FontSize="24"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HorizontalOptions="Center"
+                   VerticalOptions="End"/>
+
+            <Label x:Name="timerLabel"
+                   Text="00:00:00"
+                   FontSize="80"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <Label Text="Time"
+                   FontSize="24"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   HorizontalOptions="Center"
+                   VerticalOptions="End"/>
+
+        </Grid>
+
+        <Button x:Name="startButton"
+                Text="Start"
+                Clicked="StartButton_Clicked"
+                FontSize="40"
+                Grid.Row="1"/>
+        <Button x:Name="stopButton" Text="Stop" Clicked="StopButton_Clicked" IsVisible="False" Grid.Row="1" />
+        <Button x:Name="pauseButton" Text="Pause" Clicked="PauseButton_Clicked" IsVisible="False" Grid.Row="1" />
+
+    </Grid>
+</ContentPage>
