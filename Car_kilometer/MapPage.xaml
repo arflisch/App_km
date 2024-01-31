@@ -63,13 +63,18 @@
 
         </Grid>
 
+        
         <Button x:Name="startButton"
                 Text="Start"
                 Clicked="StartButton_Clicked"
                 FontSize="40"
                 Grid.Row="1"/>
-        <Button x:Name="stopButton" Text="Stop" Clicked="StopButton_Clicked" IsVisible="False" Grid.Row="1" />
-        <Button x:Name="pauseButton" Text="Pause" Clicked="PauseButton_Clicked" IsVisible="False" Grid.Row="1" />
+        <Button x:Name="resumeButton" Text="Resume" Clicked="ResumeButton_Clicked" IsVisible="False" FontSize="40" Grid.Row="1"/>
+        <FlexLayout Direction="Row" Grid.Row="1" JustifyContent="SpaceEvenly" AlignItems="Center">
+            <Button x:Name="stopButton" Text="Stop" FontSize="24" Padding="20" Clicked="StopButton_Clicked" IsVisible="False" Grid.Row="1" />
+            <Button x:Name="pauseButton" Text="Pause" FontSize="24" Padding="20" Clicked="PauseButton_Clicked" IsVisible="False" Grid.Row="1" />
+        </FlexLayout>
+        
 
     </Grid>
 </ContentPage>

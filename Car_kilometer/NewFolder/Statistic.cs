@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Car_kilometer.NewFolder
 {
-    class Statistic
+    public partial class Statistic : IRealmObject
     {
-        public List<Ride> rides = new List<Ride>();
+        [PrimaryKey]
+        [MapTo("_id")]
+        public ObjectId Id { get; set; }
         public double TotalDistance { get; set; }
-        public TimeSpan TotalDuration { get; set; }
+        public double TotalSecondDurations { get; set; }
+        public int TotalRides { get; set; }
     }
 }

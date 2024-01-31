@@ -59,10 +59,6 @@
                Grid.Row="2"
                />
 
-        <Rectangle Fill="Gray"
-                   Grid.Row="3"
-                   Grid.ColumnSpan="2"/>
-
     </Grid>
 
 </ContentPage>
