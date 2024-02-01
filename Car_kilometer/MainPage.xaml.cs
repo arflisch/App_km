@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using Car_kilometer.Services;
+using Car_kilometer.NewFolder;
 
 namespace Car_kilometer
 {
@@ -8,8 +10,14 @@ namespace Car_kilometer
         public MainPage()
         {
             InitializeComponent();
+
+            _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();
             
         }
+
+        private Summary _summary;
+
+
     }
 
 }

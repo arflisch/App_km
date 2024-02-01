@@ -11,11 +11,19 @@ namespace Car_kilometer.Services
     public class Summary
     {
         private  ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
+
+        public Statistic Statistic = new();
         public async Task<Statistic?> GetStatisticAsync() 
         {
+            if (Statistic != null) return Statistic;
+
             var realm = await Realm.GetInstanceAsync();
+
+            var _stat = realm.Find<Statistic>(id);
+
+            Statistic = _stat;
             
-            return realm.Find<Statistic>(id);
+            return _stat;
         }
 
         public async Task UpdateAsync(TimeSpan seconds)
