@@ -2,6 +2,7 @@
 using System.Threading;
 using Car_kilometer.Services;
 using Car_kilometer.NewFolder;
+using AVFoundation;
 
 namespace Car_kilometer
 {
@@ -12,11 +13,13 @@ namespace Car_kilometer
             InitializeComponent();
 
             _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();
-            
+
+            TotalTimeValue.Text = _summary.Statistic.TotalSecondDurations.ToString();
+
+
         }
 
         private Summary _summary;
-
 
     }
 

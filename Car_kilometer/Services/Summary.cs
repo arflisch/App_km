@@ -12,8 +12,8 @@ namespace Car_kilometer.Services
     {
         private  ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
 
-        public Statistic Statistic = new();
-        public async Task<Statistic?> GetStatisticAsync() 
+        public Statistic? Statistic = null;
+        public async Task<Statistic> GetStatisticAsync() 
         {
             if (Statistic != null) return Statistic;
 
@@ -21,24 +21,26 @@ namespace Car_kilometer.Services
 
             var _stat = realm.Find<Statistic>(id);
 
-            Statistic = _stat;
-            
-            return _stat;
+            if (_stat == null)
+            {
+                var stat = new Statistic();
+                stat.Id = id;
+                stat.TotalSecondDurations = 0;
+                stat.TotalRides = 0;
+                await CreateAsync(stat);
+                Statistic = stat;
+            }
+            else
+            {
+                Statistic = _stat;
+            }
+
+            return Statistic;
         }
 
         public async Task UpdateAsync(TimeSpan seconds)
         {
             var stat = await GetStatisticAsync();
-
-            if (null == stat)
-            {
-                stat = new Statistic();
-                stat.Id = id;
-                stat.TotalSecondDurations = seconds.TotalSeconds;
-                stat.TotalRides = 1;
-                await CreateAsync(stat);
-                return;
-            }
 
             var realm = await Realm.GetInstanceAsync();
 

@@ -46,7 +46,8 @@
                Grid.Row="1"
                Grid.Column="1"/>
 
-        <Label Text="0"
+        <Label x:Name="TotalTimeValue"
+               Text="0"
                FontSize="50"
                Grid.Row="2"
                HorizontalOptions="Center"

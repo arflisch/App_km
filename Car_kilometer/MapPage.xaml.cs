@@ -18,9 +18,10 @@ public partial class MapPage : ContentPage
 
     private Summary _summary;
 
-    private void TimerCallback(object state)
+    private async void TimerCallback(object state)
     {
         _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();
+        await _summary.GetStatisticAsync();
 
         elapsedTime = elapsedTime.Add(TimeSpan.FromSeconds(1));
 
