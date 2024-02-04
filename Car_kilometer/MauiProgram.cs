@@ -2,6 +2,7 @@
 using Car_kilometer.Services;
 using Microsoft.Extensions.Logging;
 using Realms.Exceptions;
+using Shiny;
 
 namespace Car_kilometer
 {
@@ -11,18 +12,17 @@ namespace Car_kilometer
         public static IServiceProvider ServiceProvider { get; private set; }
         public static MauiApp CreateMauiApp()
         {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                })
-                .UseMauiMaps();
+            var builder = MauiApp
+          .CreateBuilder()
+          .UseMauiApp<App>()
+          .ConfigureFonts(fonts =>
+          {
+              fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+              fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+          });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<Summary>();
             var app = builder.Build();

@@ -12,15 +12,14 @@ public partial class MapPage : ContentPage
     public MapPage()
     {
         InitializeComponent();
-
+        _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();
         timer = new Timer(TimerCallback, null, Timeout.InfiniteTimeSpan, TimeSpan.FromSeconds(1));
     }
 
     private Summary _summary;
 
     private async void TimerCallback(object state)
-    {
-        _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();
+    { 
         await _summary.GetStatisticAsync();
 
         elapsedTime = elapsedTime.Add(TimeSpan.FromSeconds(1));
