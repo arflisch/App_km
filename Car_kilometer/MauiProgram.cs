@@ -15,6 +15,7 @@ namespace Car_kilometer
             var builder = MauiApp
           .CreateBuilder()
           .UseMauiApp<App>()
+          .UseShiny()
           .ConfigureFonts(fonts =>
           {
               fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -25,24 +26,9 @@ namespace Car_kilometer
             builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<Summary>();
+            builder.Services.AddGps<MyGpsDelegate>();
             var app = builder.Build();
             ServiceProvider = app.Services;
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            var config = new RealmConfiguration(path + "my.realm")
-            {
-                IsReadOnly = false,
-            };
-            Realm localRealm;
-            try
-            {
-                localRealm = Realm.GetInstance(config);
-            }
-            catch (RealmFileAccessErrorException ex)
-            {
-                Console.WriteLine($@"Error creating or opening the
-                realm file. {ex.Message}");
-            }
 
             return app;
         }

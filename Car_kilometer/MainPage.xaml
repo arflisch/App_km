@@ -20,7 +20,8 @@
                HorizontalOptions="Center"
                Grid.ColumnSpan="2"/>
 
-        <Label Text="0"
+        <Label x:Name="TotalKmValue" 
+               Text="0"
                FontSize="50"
                Grid.Row="1"
                HorizontalOptions="Center"

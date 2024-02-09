@@ -15,5 +15,8 @@ namespace Car_kilometer.NewFolder
         public double TotalDistance { get; set; }
         public double TotalSecondDurations { get; set; }
         public int TotalRides { get; set; }
+        // new properties
+        public double Speed { get; set; }
+        public double TotalDistanceDuringRide {  get; set; }
     }
 }

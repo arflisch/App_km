@@ -19,7 +19,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="0"
+            <Label x:Name="KmLabel"
+                   Text="0"
                    FontSize="80"
                    Grid.Row="0"
                    HorizontalOptions="Center"
@@ -32,7 +33,8 @@
                     HorizontalOptions="Center"
                     VerticalOptions="End"/>
 
-            <Label Text="0"
+            <Label x:Name="SpeedLabel"
+                   Text="0"
                    FontSize="80"
                    Grid.Row="0"
                    Grid.Column="1"

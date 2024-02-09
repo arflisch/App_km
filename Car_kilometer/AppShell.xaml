@@ -14,8 +14,8 @@
                           ContentTemplate="{DataTemplate local:MainPage}"
                           Route="MainPage" />
         </Tab>
-        <Tab Title="Map">
-            <ShellContent Title="Map"
+        <Tab Title="Ride">
+            <ShellContent Title="Ride"
                   ContentTemplate="{DataTemplate local:MapPage}"
                   Route="MapPage" />
         </Tab>

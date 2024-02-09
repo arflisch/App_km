@@ -19,6 +19,8 @@ namespace Car_kilometer.NewFolder
         [MapTo("_id")]
         public ObjectId Id { get; set; } 
         public double Distance { get; set; } 
-        public double Duration { get; set; } 
+        public double Duration { get; set; }
     }
+
 }
+
