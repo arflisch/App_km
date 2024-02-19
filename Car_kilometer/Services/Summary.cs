@@ -1,6 +1,8 @@
 ﻿using Android.Util;
+using Car_kilometer.Models;
 using Car_kilometer.NewFolder;
 using MongoDB.Bson;
+using Shiny.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,10 @@ namespace Car_kilometer.Services
         private Realm? RealmDB;
         public async Task<Statistic> GetStatisticAsync()
         {
-            if (Statistic != null) return Statistic;
+            if (Statistic != null)
+            {
+                return Statistic;
+            }
 
             await CreateRealmDB();
 
@@ -32,7 +37,8 @@ namespace Car_kilometer.Services
                     TotalSecondDurations = 0,
                     TotalRides = 0,
                     Speed = 0,
-                    TotalDistanceDuringRide = 0
+                    TotalDistanceDuringRide = 0,
+                    Positions = new List<Position>()
                 };
                 await CreateAsync(stat);
                 Statistic = stat;
@@ -64,7 +70,7 @@ namespace Car_kilometer.Services
             RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(true);
         }
 
-        public async Task UpdateAsync(TimeSpan seconds, double distance)
+        public async Task UpdateAsync(TimeSpan seconds, int distance)
         {
             var stat = await GetStatisticAsync();
 
@@ -79,7 +85,7 @@ namespace Car_kilometer.Services
                 stat.Speed = 0;
             });
         }
-        public async Task UpdateDuringRideAsync(double distance, double speed)
+        public async Task UpdateDuringRideAsync(Position position, double speed)
         {
             var stat = await GetStatisticAsync();
 
@@ -87,7 +93,7 @@ namespace Car_kilometer.Services
 
             await RealmDB!.WriteAsync(() =>
             {
-                stat.TotalDistanceDuringRide += distance;
+                stat.Positions.Add(position);
                 stat.Speed = speed;
             });
         }

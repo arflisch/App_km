@@ -1,3 +1,5 @@
+using AndroidX.Browser.Trusted.Sharing;
+using Car_kilometer.Models;
 using Car_kilometer.NewFolder;
 using Car_kilometer.Services;
 using Shiny.Locations;
@@ -16,11 +18,13 @@ public partial class MapPage : ContentPage
         InitializeComponent();
         _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();
         _gpsManager = MauiProgram.ServiceProvider.GetRequiredService<IGpsManager>();
+        _sharedDto = MauiProgram.ServiceProvider.GetRequiredService<SharedDto>();
     }
 
     private Summary _summary;
 
     readonly IGpsManager _gpsManager;
+    private SharedDto _sharedDto;
     private async void StartButton_Clicked(object sender, EventArgs e)
     {
         if (!isTimerRunning)
@@ -48,24 +52,39 @@ public partial class MapPage : ContentPage
             {
                 BackgroundMode = GpsBackgroundMode.Realtime,
                 Accuracy = GpsAccuracy.Highest,
-                DistanceFilterMeters = 5
+                //DistanceFilterMeters = 5
             });
         }
     }
 
+
+    //Position CurrentPosition;
+    //Position PreviousPosition;
+    private readonly object _lock = new object();
     private async void UpdateUI(object state)
     {
-        Statistic statistic = await _summary.GetStatisticAsync();
-
-        Device.BeginInvokeOnMainThread(() =>
+        Dispatcher.Dispatch(() =>
         {
             // Calculer le temps écoulé depuis le début du trajet
             elapsedTime = DateTime.Now - rideStartTime;
 
-            // Mettre à jour l'interface utilisateur avec le temps écoulé
+            // Lecture des valeurs de _sharedDto
+            double totalDistance;
+            double speed;
+
+            lock (_lock)
+            {
+                totalDistance = _sharedDto.TotalDistanceDuringRide;
+                speed = _sharedDto.Speed;
+            }
+
+            // Conversion des unités et mise à jour de l'interface utilisateur
+            int totalDistanceKm = (int)(totalDistance / 1000);
+            int speedKmH = (int)(speed * 3.6);
+
             timerLabel.Text = $"{elapsedTime.Hours:00}:{elapsedTime.Minutes:00}:{elapsedTime.Seconds:00}";
-            KmLabel.Text = statistic.TotalDistanceDuringRide.ToString("0.00");
-            SpeedLabel.Text = statistic.Speed.ToString("0");
+            KmLabel.Text = totalDistanceKm.ToString();
+            SpeedLabel.Text = speedKmH.ToString();
         });
     }
 
@@ -117,7 +136,8 @@ public partial class MapPage : ContentPage
             realm.Add(new Ride(statistic.TotalDistanceDuringRide, elapsedTime));
         });
 
-        await _summary.UpdateAsync(elapsedTime, statistic.TotalDistanceDuringRide);
+        await _summary.UpdateAsync(elapsedTime, _sharedDto.TotalDistanceDuringRide);
+        _sharedDto.TotalDistanceDuringRide = 0;
     }
 
 

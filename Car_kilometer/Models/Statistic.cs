@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using Shiny.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace Car_kilometer.NewFolder
         public int TotalRides { get; set; }
         // new properties
         public double Speed { get; set; }
-        public double TotalDistanceDuringRide {  get; set; }
+        public int TotalDistanceDuringRide {  get; set; }
+
+        public List<Position> Positions = [];
     }
 }

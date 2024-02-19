@@ -1,4 +1,5 @@
-﻿using Car_kilometer.NewFolder;
+﻿using Car_kilometer.Models;
+using Car_kilometer.NewFolder;
 using Car_kilometer.Services;
 using Microsoft.Extensions.Logging;
 using Realms.Exceptions;
@@ -26,6 +27,7 @@ namespace Car_kilometer
             builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<Summary>();
+            builder.Services.AddSingleton<SharedDto>();
             builder.Services.AddGps<MyGpsDelegate>();
             var app = builder.Build();
             ServiceProvider = app.Services;
