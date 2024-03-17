@@ -1,20 +1,13 @@
-﻿using Android.Util;
-using Car_kilometer.Models;
-using Car_kilometer.NewFolder;
+﻿using Car_kilometer.NewFolder;
 using MongoDB.Bson;
 using Shiny.Locations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Car_kilometer.Services
 {
     public class Summary
     {
-        private  ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
-        
+        private ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
+
         public Statistic? Statistic = null;
 
         private Realm? RealmDB;

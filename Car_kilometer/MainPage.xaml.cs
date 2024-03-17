@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using Car_kilometer.Services;
-using Car_kilometer.NewFolder;
+﻿using Car_kilometer.Services;
 
 namespace Car_kilometer
 {

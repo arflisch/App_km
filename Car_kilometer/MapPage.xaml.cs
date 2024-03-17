@@ -1,4 +1,3 @@
-using AndroidX.Browser.Trusted.Sharing;
 using Car_kilometer.Models;
 using Car_kilometer.NewFolder;
 using Car_kilometer.Services;
@@ -110,7 +109,7 @@ public partial class MapPage : ContentPage
 
             // Réinitialiser le chronomètre et l'interface utilisateur
             elapsedTime = TimeSpan.Zero;
-            Device.BeginInvokeOnMainThread(() =>
+            Dispatcher.Dispatch(() =>
             {
                 timerLabel.Text = elapsedTime.ToString(@"hh\:mm\:ss");
                 KmLabel.Text = "0";

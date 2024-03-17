@@ -1,8 +1,7 @@
 ﻿using Car_kilometer.Models;
-using Car_kilometer.NewFolder;
 using Car_kilometer.Services;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using Realms.Exceptions;
 using Shiny;
 
 namespace Car_kilometer
@@ -16,6 +15,8 @@ namespace Car_kilometer
             var builder = MauiApp
           .CreateBuilder()
           .UseMauiApp<App>()
+            // Initialize the .NET MAUI Community Toolkit by adding the below line of code
+          .UseMauiCommunityToolkit()
           .UseShiny()
           .ConfigureFonts(fonts =>
           {

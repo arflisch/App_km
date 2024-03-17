@@ -1,20 +1,11 @@
 ﻿
 #if ANDROID
 using AndroidX.Core.App;
-using Microsoft.Maui.Devices.Sensors;
 
 #endif
 
 using Shiny.Locations;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Car_kilometer.NewFolder;
 using Car_kilometer.Models;
-using AndroidX.Browser.Trusted.Sharing;
 
 namespace Car_kilometer.Services
 {
