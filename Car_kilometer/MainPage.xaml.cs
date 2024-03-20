@@ -1,4 +1,5 @@
 ﻿using Car_kilometer.Services;
+using Car_kilometer.ViewModels;
 
 namespace Car_kilometer
 {
@@ -6,9 +7,11 @@ namespace Car_kilometer
     {
         private Summary _summary;
 
-        public MainPage()
+        public MainPage(MainPageVM vM)
         {
             InitializeComponent();
+
+            BindingContext = vM;
 
             // Initialiser le service Summary
             _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();

@@ -1,33 +1,38 @@
 ﻿
 #if ANDROID
 using AndroidX.Core.App;
-
 #endif
 
 using Shiny.Locations;
 using Car_kilometer.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Car_kilometer.Services
 {
-    public partial class MyGpsDelegate : IGpsDelegate
+    public partial class MyGpsDelegate : GpsDelegate
     {
         private Position previousPosition;
         private Summary _summary;
         private SharedDto _sharedDto;
-        public MyGpsDelegate()
+        
+        public MyGpsDelegate(ILogger<MyGpsDelegate> logger) : base(logger)
         {
             // like all other shiny delegates, dependency injection works here
             // treat this as a singleton
             _summary = MauiProgram.ServiceProvider.GetRequiredService<Summary>();
             _sharedDto = MauiProgram.ServiceProvider.GetRequiredService<SharedDto>();
+            MinimumDistance = Shiny.Distance.FromMeters(10);
+            MinimumTime = TimeSpan.FromSeconds(10);
         }
         private readonly object _lock = new object();
 
-        public async Task OnReading(GpsReading reading)
+        
+
+        protected override async Task OnGpsReading(GpsReading reading)
         {
             // do something with the reading
             Position currentPosition = reading.Position;
-
+           
             if (previousPosition != null)
             {
                 // Calculer la distance entre les coordonnées actuelles et précédentes

@@ -70,8 +70,8 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.10" />
 		<PackageReference Include="Realm" Version="11.7.0" />
-		<PackageReference Include="Shiny.Locations" Version="3.2.4" />
-		<PackageReference Include="Shiny.Hosting.Maui" version="3.2.4" />
+		<PackageReference Include="Shiny.Locations" Version="3.3.0" />
+		<PackageReference Include="Shiny.Hosting.Maui" version="3.3.0" />
 	</ItemGroup>
 
 	<ItemGroup>
