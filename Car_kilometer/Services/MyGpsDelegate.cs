@@ -1,5 +1,4 @@
-﻿
-#if ANDROID
+﻿#if ANDROID
 using AndroidX.Core.App;
 using Microsoft.Maui.Devices.Sensors;
 
@@ -32,7 +31,7 @@ namespace Car_kilometer.Services
         }
         private readonly object _lock = new object();
 
-        public async Task OnReading(GpsReading reading)
+        public Task OnReading(GpsReading reading)
         {
             // do something with the reading
             Position currentPosition = reading.Position;
@@ -55,6 +54,7 @@ namespace Car_kilometer.Services
                 // Faire quelque chose avec la distance (par exemple, mettre à jour votre interface utilisateur)
             }
             previousPosition = currentPosition;
+            return Task.CompletedTask;
         }
     }
 

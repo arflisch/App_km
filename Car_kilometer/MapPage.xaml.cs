@@ -8,7 +8,7 @@ namespace Car_kilometer;
 
 public partial class MapPage : ContentPage
 {
-    private Timer timer;
+    private Timer? timer;
     private TimeSpan elapsedTime;
     private bool isTimerRunning = false;
     private DateTime rideStartTime;
@@ -61,7 +61,7 @@ public partial class MapPage : ContentPage
     //Position CurrentPosition;
     //Position PreviousPosition;
     private readonly object _lock = new object();
-    private async void UpdateUI(object state)
+    private void UpdateUI(object? state)
     {
         Dispatcher.Dispatch(() =>
         {
@@ -91,38 +91,41 @@ public partial class MapPage : ContentPage
 
     private async void StopButton_Clicked(object sender, EventArgs e)
     {
-        await _gpsManager.StopListener();
-        timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
-
-        bool answer = await DisplayAlert("Confirmation", "Do you really stop?", "yes", "No");
-
-        if (answer)
+        if (timer != null)
         {
-            // L'utilisateur a choisi "Oui", donc arrêter le chronomètre et réinitialiser
+            await _gpsManager.StopListener();
             timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
 
-            stopButton.IsVisible = false;
-            pauseButton.IsVisible = false;
-            resumeButton.IsVisible = false;
-            startButton.IsVisible = true;
+            bool answer = await DisplayAlert("Confirmation", "Do you really stop?", "yes", "No");
 
-            await Add();
-
-            // Réinitialiser le chronomètre et l'interface utilisateur
-            elapsedTime = TimeSpan.Zero;
-            Device.BeginInvokeOnMainThread(() =>
+            if (answer)
             {
-                timerLabel.Text = elapsedTime.ToString(@"hh\:mm\:ss");
-                KmLabel.Text = "0";
-                SpeedLabel.Text = "0";
-            });
+                // L'utilisateur a choisi "Oui", donc arrêter le chronomètre et réinitialiser
+                timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
 
-            isTimerRunning = false;
-        }
-        else
-        {
-            // L'utilisateur a choisi "Non", donc reprendre le chronomètre
-            timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(1));
+                stopButton.IsVisible = false;
+                pauseButton.IsVisible = false;
+                resumeButton.IsVisible = false;
+                startButton.IsVisible = true;
+
+                await Add();
+
+                // Réinitialiser le chronomètre et l'interface utilisateur
+                elapsedTime = TimeSpan.Zero;
+                Dispatcher.Dispatch(() =>
+                {
+                    timerLabel.Text = elapsedTime.ToString(@"hh\:mm\:ss");
+                    KmLabel.Text = "0";
+                    SpeedLabel.Text = "0";
+                });
+
+                isTimerRunning = false;
+            }
+            else
+            {
+                // L'utilisateur a choisi "Non", donc reprendre le chronomètre
+                timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(1));
+            }
         }
     }
 
@@ -144,26 +147,32 @@ public partial class MapPage : ContentPage
     private void PauseButton_Clicked(object sender, EventArgs e)
     {
         // Mettre en pause le chronomètre lorsque le bouton "Pause" est cliqué
-        timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+        if (timer != null)
+        {
+            timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
 
-        stopButton.IsVisible = false;
-        pauseButton.IsVisible = false;
-        startButton.IsVisible = false;
-        resumeButton.IsVisible = true;
+            stopButton.IsVisible = false;
+            pauseButton.IsVisible = false;
+            startButton.IsVisible = false;
+            resumeButton.IsVisible = true;
 
-        isTimerRunning = false;
+            isTimerRunning = false;
+        }
     }
 
     private void ResumeButton_Clicked(object sender, EventArgs e)
     {
         // Reprendre le chronomètre lorsque le bouton "Resume" est cliqué
-        timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(1));
+        if (timer != null)
+        {
+            timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(1));
 
-        stopButton.IsVisible = true;
-        pauseButton.IsVisible = true;
-        startButton.IsVisible = false;
-        resumeButton.IsVisible = false;
+            stopButton.IsVisible = true;
+            pauseButton.IsVisible = true;
+            startButton.IsVisible = false;
+            resumeButton.IsVisible = false;
 
-        isTimerRunning = true;
+            isTimerRunning = true;
+        }
     }
 }
