@@ -70,7 +70,7 @@ namespace Car_kilometer.Services
             RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(true);
         }
 
-        public async Task UpdateAsync(TimeSpan seconds, int distance)
+        public async Task UpdateAsync(TimeSpan seconds, double distance)
         {
             var stat = await GetStatisticAsync();
 

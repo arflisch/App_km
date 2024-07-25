@@ -33,7 +33,7 @@ namespace Car_kilometer
             TimeSpan time = TimeSpan.FromSeconds(_summary.Statistic.TotalSecondDurations);
 
             // Afficher les valeurs formatées dans les contrôles d'interface utilisateur
-            TotalKmValue.Text = _summary.Statistic.TotalDistance.ToString("0");
+            TotalKmValue.Text = _summary.Statistic.TotalDistance.ToString("F1");
             TotalTimeValue.Text = string.Format("{0}h{1:00}", (int)time.TotalHours, time.Minutes);
             TotalRideValue.Text = _summary.Statistic.TotalRides.ToString();
         }

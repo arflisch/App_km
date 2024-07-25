@@ -8,7 +8,7 @@ namespace Car_kilometer.Models
 {
     internal class SharedDto
     {
-        public int Speed { get; set; }
-        public int TotalDistanceDuringRide { get; set; }
+        public double Speed { get; set; }
+        public double TotalDistanceDuringRide { get; set; }
     }
 }

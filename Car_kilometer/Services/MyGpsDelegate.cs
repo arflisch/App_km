@@ -40,8 +40,8 @@ namespace Car_kilometer.Services
             {
                 // Calculer la distance entre les coordonnées actuelles et précédentes
                 //double distance = Location.CalculateDistance(previousPosition.Latitude, previousPosition.Longitude, currentPosition, DistanceUnits.Kilometers);
-                int distance = (int)previousPosition.GetDistanceTo(currentPosition).TotalMeters;
-                int speed = (int)reading.Speed;
+                double distance = previousPosition.GetDistanceTo(currentPosition).TotalMeters;
+                double speed = reading.Speed;
 
                 lock (_lock)
                 {

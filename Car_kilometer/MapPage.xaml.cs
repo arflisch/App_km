@@ -79,12 +79,12 @@ public partial class MapPage : ContentPage
             }
 
             // Conversion des unités et mise à jour de l'interface utilisateur
-            int totalDistanceKm = (int)(totalDistance / 1000);
-            int speedKmH = (int)(speed * 3.6);
+            double totalDistanceKm = (totalDistance / 1000);
+            double speedKmH = (speed * 3.6);
 
             timerLabel.Text = $"{elapsedTime.Hours:00}:{elapsedTime.Minutes:00}:{elapsedTime.Seconds:00}";
-            KmLabel.Text = totalDistanceKm.ToString();
-            SpeedLabel.Text = speedKmH.ToString();
+            KmLabel.Text = totalDistanceKm.ToString("F1");
+            SpeedLabel.Text = speedKmH.ToString("F0");
         });
     }
 
@@ -139,7 +139,7 @@ public partial class MapPage : ContentPage
             realm.Add(new Ride(statistic.TotalDistanceDuringRide, elapsedTime));
         });
 
-        await _summary.UpdateAsync(elapsedTime, _sharedDto.TotalDistanceDuringRide);
+        await _summary.UpdateAsync(elapsedTime, _sharedDto.TotalDistanceDuringRide/1000);
         _sharedDto.TotalDistanceDuringRide = 0;
     }
 
