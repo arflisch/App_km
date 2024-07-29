@@ -8,7 +8,7 @@
             <RowDefinition Height="150"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -61,7 +61,9 @@
                VerticalOptions="End"
                Grid.Row="2"
                />
+        <Button Text="View Rides" Clicked="ViewRidesButton_Clicked" Grid.Row="3" Grid.ColumnSpan="2"/>
 
     </Grid>
+    
 
 </ContentPage>

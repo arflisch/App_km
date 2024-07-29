@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Car_kilometer.NewFolder
 {
-    partial class Ride : IRealmObject
+    public class Ride
     {
         public Ride(double distance, TimeSpan duration)
         {

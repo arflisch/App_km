@@ -131,15 +131,9 @@ public partial class MapPage : ContentPage
 
     private async Task Add()
     {
-        var realm = await Realm.GetInstanceAsync();
-        Statistic statistic = await _summary.GetStatisticAsync();
-
-        await realm.WriteAsync(() =>
-        {
-            realm.Add(new Ride(statistic.TotalDistanceDuringRide, elapsedTime));
-        });
-
-        await _summary.UpdateAsync(elapsedTime, _sharedDto.TotalDistanceDuringRide/1000);
+        //Statistic statistic = await _summary.GetStatisticAsync();
+        double _distance = _sharedDto.TotalDistanceDuringRide / 1000;
+        await _summary.UpdateAsync(elapsedTime, _distance, new Ride(_distance, elapsedTime));
         _sharedDto.TotalDistanceDuringRide = 0;
     }
 

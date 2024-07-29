@@ -45,6 +45,12 @@ namespace Car_kilometer
             // Appeler la méthode GetStatisticAsync pour créer la base de données Realm
             await _summary.GetStatisticAsync();
         }
+
+        private async void ViewRidesButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RidesPage());
+        }
+
     }
 
 }

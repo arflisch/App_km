@@ -35,10 +35,9 @@ namespace Car_kilometer.Services
                 {
                     Id = id,
                     TotalSecondDurations = 0,
+                    TotalDistance = 0,
                     TotalRides = 0,
-                    Speed = 0,
-                    TotalDistanceDuringRide = 0,
-                    Positions = new List<Position>()
+                    Rides = new List<Ride>()
                 };
                 await CreateAsync(stat);
                 Statistic = stat;
@@ -62,7 +61,7 @@ namespace Car_kilometer.Services
             var path = Path.Combine(Environment.GetFolderPath(folder), "my.realm");
             var config = new RealmConfiguration(path)
             {
-                SchemaVersion = 1,
+                SchemaVersion = 2,
                 IsReadOnly = false,
 
             };
@@ -70,7 +69,7 @@ namespace Car_kilometer.Services
             RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(true);
         }
 
-        public async Task UpdateAsync(TimeSpan seconds, double distance)
+        public async Task UpdateAsync(TimeSpan seconds, double distance, Ride ride)
         {
             var stat = await GetStatisticAsync();
 
@@ -81,11 +80,10 @@ namespace Car_kilometer.Services
                 stat.TotalSecondDurations += seconds.TotalSeconds;
                 stat.TotalRides += 1;
                 stat.TotalDistance += distance;
-                stat.TotalDistanceDuringRide = 0;
-                stat.Speed = 0;
+                stat.Rides.Add(ride);
             });
         }
-        public async Task UpdateDuringRideAsync(Position position, double speed)
+        /*public async Task UpdateDuringRideAsync(Position position, double speed)
         {
             var stat = await GetStatisticAsync();
 
@@ -96,7 +94,7 @@ namespace Car_kilometer.Services
                 stat.Positions.Add(position);
                 stat.Speed = speed;
             });
-        }
+        }*/
         private async Task CreateAsync(Statistic statistic)
         {
             await CreateRealmDB();
