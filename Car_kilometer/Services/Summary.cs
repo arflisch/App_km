@@ -57,17 +57,51 @@ namespace Car_kilometer.Services
             {
                 return;
             }
+
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Path.Combine(Environment.GetFolderPath(folder), "my.realm");
             var config = new RealmConfiguration(path)
             {
                 SchemaVersion = 2,
                 IsReadOnly = false,
+                MigrationCallback = (migration, oldSchemaVersion) =>
+                {
+                    if (oldSchemaVersion < 2)
+                    {
+                        var oldStatistics = migration.OldRealm.DynamicApi.All("Statistic");
+                        var newStatistics = migration.NewRealm.All<Statistic>();
 
+                        for (int i = 0; i < oldStatistics.Count(); i++)
+                        {
+                            var oldStatistic = oldStatistics.ElementAt(i);
+                            var newStatistic = newStatistics.ElementAt(i);
+
+                            // Copy data from old properties to new properties
+                            newStatistic.TotalDistance = oldStatistic.TotalDistance;
+                            newStatistic.TotalSecondDurations = oldStatistic.TotalSecondDurations;
+                            newStatistic.TotalRides = oldStatistic.TotalRides;
+
+                            // Copy Rides from old schema to new schema
+                            var oldRides = oldStatistic.Rides;
+                            foreach (var oldRide in oldRides)
+                            {
+                                var newRide = new Ride
+                                {
+                                    Distance = oldRide.Distance,
+                                    Duration = oldRide.Duration
+                                };
+                                newStatistic.Rides.Add(newRide);
+                            }
+                        }
+
+                        // Note: Realm doesn't support direct deletion of old schema objects.
+                    }
+                }
             };
 
             RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(true);
         }
+
 
         public async Task UpdateAsync(TimeSpan seconds, double distance, Ride ride)
         {

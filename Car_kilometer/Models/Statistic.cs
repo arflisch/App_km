@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Car_kilometer.NewFolder
 {
-    public partial class Statistic : IRealmObject
+    public partial class Statistic : RealmObject
     {
         [PrimaryKey]
         [MapTo("_id")]
