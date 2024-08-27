@@ -45,6 +45,8 @@ namespace Car_kilometer.Services
             else
             {
                 Statistic = _stat;
+                Statistic.Rides.Add(new Ride(15, TimeSpan.FromMinutes(15)));
+                Statistic.Rides.Add(new Ride(10, TimeSpan.FromMinutes(10)));
             }
 
 
@@ -62,14 +64,15 @@ namespace Car_kilometer.Services
             var path = Path.Combine(Environment.GetFolderPath(folder), "my.realm");
             var config = new RealmConfiguration(path)
             {
-                SchemaVersion = 2,
+                SchemaVersion = 5,
                 IsReadOnly = false,
                 MigrationCallback = (migration, oldSchemaVersion) =>
                 {
-                    if (oldSchemaVersion < 2)
+                    if (oldSchemaVersion < 5)
                     {
                         var oldStatistics = migration.OldRealm.DynamicApi.All("Statistic");
                         var newStatistics = migration.NewRealm.All<Statistic>();
+                        var oldRides = migration.OldRealm.DynamicApi.All("Ride");
 
                         for (int i = 0; i < oldStatistics.Count(); i++)
                         {
@@ -77,18 +80,21 @@ namespace Car_kilometer.Services
                             var newStatistic = newStatistics.ElementAt(i);
 
                             // Copy data from old properties to new properties
-                            newStatistic.TotalDistance = oldStatistic.TotalDistance;
-                            newStatistic.TotalSecondDurations = oldStatistic.TotalSecondDurations;
-                            newStatistic.TotalRides = oldStatistic.TotalRides;
+                            newStatistic.TotalDistance = oldStatistic.DynamicApi.Get<double>("TotalDistance");
+                            newStatistic.TotalSecondDurations = oldStatistic.DynamicApi.Get<double>("TotalSecondDurations");
+                            newStatistic.TotalRides = oldStatistic.DynamicApi.Get<int>("TotalRides");
+
+                            // Ignore removed properties
+                            // double oldSpeed = oldStatistic.DynamicApi.Get<double>("Speed"); // No longer needed
+                            // int oldTotalDistanceDuringRide = oldStatistic.DynamicApi.Get<int>("TotalDistanceDuringRide");
 
                             // Copy Rides from old schema to new schema
-                            var oldRides = oldStatistic.Rides;
                             foreach (var oldRide in oldRides)
                             {
                                 var newRide = new Ride
                                 {
-                                    Distance = oldRide.Distance,
-                                    Duration = oldRide.Duration
+                                   Distance = oldRide.DynamicApi.Get<double>("Distance"),
+                                   Duration = oldRide.DynamicApi.Get<double>("Duration")
                                 };
                                 newStatistic.Rides.Add(newRide);
                             }
@@ -99,7 +105,7 @@ namespace Car_kilometer.Services
                 }
             };
 
-            RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(true);
+            RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(false);
         }
 
 

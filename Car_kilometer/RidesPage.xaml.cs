@@ -16,14 +16,25 @@ public partial class RidesPage : ContentPage
 
     private async void LoadRides()
 	{
-		var realm = await Realm.GetInstanceAsync();
     
         // Supposons qu'il n'y a qu'un seul objet Statistic
-        var statistic = realm.All<Statistic>().FirstOrDefault();
-    
+        var statistic = await _summary.GetStatisticAsync();
+
         if (statistic != null)
         {
             var rides = statistic.Rides.OrderByDescending(r => r.Id).ToList();
+            if (rides.Count == 0)
+            {
+                Console.WriteLine("No rides found.");
+            }
+            else
+            {
+                for (int i = 0; i < rides.Count; i++)
+                {
+                    Console.WriteLine($"{rides[i].Id}, {rides[i].Distance}");
+                }
+            }
+
             var rideViewModels = new ObservableCollection<RidesPage.RideViewModel>();
 
             foreach (var ride in rides)
@@ -31,12 +42,17 @@ public partial class RidesPage : ContentPage
                 rideViewModels.Add(new RidesPage.RideViewModel
                 {
                     Id = ride.Id.ToString(),
-                    Distance = $"{ride.Distance / 1000:F2} km",
-                    Duration = ride.Duration.ToString(@"hh\:mm\:ss")
+                    Distance = $"{ride.Distance:F2} km",
+                    Duration = TimeSpan.FromSeconds(ride.Duration).ToString(@"hh\:mm\:ss")
                 });
             }
 
             RidesListView.ItemsSource = rideViewModels;
+
+        }
+        else
+        {
+            Console.WriteLine("Statistic object is null.");
         }
     }
 
