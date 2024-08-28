@@ -101,39 +101,42 @@ public partial class MapPage : ContentPage
             if (answer)
             {
                 // L'utilisateur a choisi "Oui", donc arrêter le chronomètre et réinitialiser
-                timer.Change(Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
+                string description = await DisplayPromptAsync("Description", "Please enter a description for your activity:", "register");
 
-                stopButton.IsVisible = false;
-                pauseButton.IsVisible = false;
-                resumeButton.IsVisible = false;
-                startButton.IsVisible = true;
-
-                await Add();
-
-                // Réinitialiser le chronomètre et l'interface utilisateur
-                elapsedTime = TimeSpan.Zero;
-                Dispatcher.Dispatch(() =>
+                if (!string.IsNullOrEmpty(description))
                 {
-                    timerLabel.Text = elapsedTime.ToString(@"hh\:mm\:ss");
-                    KmLabel.Text = "0";
-                    SpeedLabel.Text = "0";
-                });
 
-                isTimerRunning = false;
+                    await Add(description);
+
+                    // Réinitialiser le chronomètre et l'interface utilisateur
+                    elapsedTime = TimeSpan.Zero;
+                    Dispatcher.Dispatch(() =>
+                    {
+                        timerLabel.Text = elapsedTime.ToString(@"hh\:mm\:ss");
+                        KmLabel.Text = "0";
+                        SpeedLabel.Text = "0";
+                    });
+
+                    stopButton.IsVisible = false;
+                    pauseButton.IsVisible = false;
+                    resumeButton.IsVisible = false;
+                    startButton.IsVisible = true;
+
+                    isTimerRunning = false;
+                }
             }
             else
             {
-                // L'utilisateur a choisi "Non", donc reprendre le chronomètre
                 timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(1));
             }
         }
     }
 
-    private async Task Add()
+    private async Task Add(string description)
     {
         //Statistic statistic = await _summary.GetStatisticAsync();
         double _distance = _sharedDto.TotalDistanceDuringRide / 1000;
-        await _summary.UpdateAsync(elapsedTime, _distance, new Ride(_distance, elapsedTime));
+        await _summary.UpdateAsync(elapsedTime, _distance, new Ride(description, _distance, elapsedTime));
         _sharedDto.TotalDistanceDuringRide = 0;
     }
 

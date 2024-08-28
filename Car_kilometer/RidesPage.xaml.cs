@@ -22,7 +22,7 @@ public partial class RidesPage : ContentPage
 
         if (statistic != null)
         {
-            var rides = statistic.Rides.OrderByDescending(r => r.Id).ToList();
+            var rides = statistic.Rides;
             if (rides.Count == 0)
             {
                 Console.WriteLine("No rides found.");
@@ -41,7 +41,7 @@ public partial class RidesPage : ContentPage
             {
                 rideViewModels.Add(new RidesPage.RideViewModel
                 {
-                    Id = ride.Id.ToString(),
+                    Description = ride.Description,
                     Distance = $"{ride.Distance:F2} km",
                     Duration = TimeSpan.FromSeconds(ride.Duration).ToString(@"hh\:mm\:ss")
                 });
@@ -58,7 +58,7 @@ public partial class RidesPage : ContentPage
 
     public class RideViewModel
     {
-        public string? Id { get; set; }
+        public string? Description { get; set; }
         public string? Distance { get; set; }
         public string? Duration { get; set; }
     }

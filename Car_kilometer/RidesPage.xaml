@@ -10,7 +10,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout>
-                            <Label Text="{Binding Id}" FontAttributes="Bold" />
+                            <Label Text="{Binding Description}" FontAttributes="Bold" />
                             <Label Text="{Binding Distance}" />
                             <Label Text="{Binding Duration}" />
                         </StackLayout>

@@ -17,6 +17,6 @@ namespace Car_kilometer.NewFolder
         public double TotalSecondDurations { get; set; }
         public int TotalRides { get; set; }
         // new properties
-        public List<Ride> Rides = [];
+        public IList<Ride> Rides { get; }
     }
 }

@@ -3,6 +3,7 @@ using Car_kilometer.Models;
 using Car_kilometer.NewFolder;
 using MongoDB.Bson;
 using Shiny.Locations;
+using Shiny.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Car_kilometer.Services
 {
     public class Summary
     {
-        private  ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
+        private ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
         
         public Statistic? Statistic = null;
 
@@ -36,8 +37,7 @@ namespace Car_kilometer.Services
                     Id = id,
                     TotalSecondDurations = 0,
                     TotalDistance = 0,
-                    TotalRides = 0,
-                    Rides = new List<Ride>()
+                    TotalRides = 0
                 };
                 await CreateAsync(stat);
                 Statistic = stat;
@@ -45,10 +45,7 @@ namespace Car_kilometer.Services
             else
             {
                 Statistic = _stat;
-                Statistic.Rides.Add(new Ride(15, TimeSpan.FromMinutes(15)));
-                Statistic.Rides.Add(new Ride(10, TimeSpan.FromMinutes(10)));
             }
-
 
             return Statistic;
         }
@@ -64,46 +61,49 @@ namespace Car_kilometer.Services
             var path = Path.Combine(Environment.GetFolderPath(folder), "my.realm");
             var config = new RealmConfiguration(path)
             {
-                SchemaVersion = 5,
+                SchemaVersion = 7,
                 IsReadOnly = false,
                 MigrationCallback = (migration, oldSchemaVersion) =>
                 {
-                    if (oldSchemaVersion < 5)
+                    if (oldSchemaVersion < 7)
                     {
                         var oldStatistics = migration.OldRealm.DynamicApi.All("Statistic");
                         var newStatistics = migration.NewRealm.All<Statistic>();
-                        var oldRides = migration.OldRealm.DynamicApi.All("Ride");
 
                         for (int i = 0; i < oldStatistics.Count(); i++)
                         {
                             var oldStatistic = oldStatistics.ElementAt(i);
                             var newStatistic = newStatistics.ElementAt(i);
 
-                            // Copy data from old properties to new properties
+                            // Mise à jour des propriétés existantes
                             newStatistic.TotalDistance = oldStatistic.DynamicApi.Get<double>("TotalDistance");
                             newStatistic.TotalSecondDurations = oldStatistic.DynamicApi.Get<double>("TotalSecondDurations");
                             newStatistic.TotalRides = oldStatistic.DynamicApi.Get<int>("TotalRides");
 
-                            // Ignore removed properties
-                            // double oldSpeed = oldStatistic.DynamicApi.Get<double>("Speed"); // No longer needed
-                            // int oldTotalDistanceDuringRide = oldStatistic.DynamicApi.Get<int>("TotalDistanceDuringRide");
+                            // Migration des rides
+                            var oldRides = oldStatistic.DynamicApi.GetList<IRealmObjectBase>("Rides");
 
-                            // Copy Rides from old schema to new schema
+                            // Migration des rides
                             foreach (var oldRide in oldRides)
                             {
+                                // Extraire manuellement les propriétés nécessaires
+                                var distance = oldRide.DynamicApi.Get<double>("Distance");
+                                var duration = oldRide.DynamicApi.Get<double>("Duration");
+
+                                // Créer un nouvel objet Ride dans le nouveau schéma
                                 var newRide = new Ride
                                 {
-                                   Distance = oldRide.DynamicApi.Get<double>("Distance"),
-                                   Duration = oldRide.DynamicApi.Get<double>("Duration")
+                                    Distance = distance,
+                                    Duration = duration,
+                                    Description = "Default Description"  // Utilisation d'une valeur par défaut
                                 };
                                 newStatistic.Rides.Add(newRide);
                             }
                         }
-
-                        // Note: Realm doesn't support direct deletion of old schema objects.
                     }
                 }
             };
+
 
             RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(false);
         }
@@ -123,18 +123,6 @@ namespace Car_kilometer.Services
                 stat.Rides.Add(ride);
             });
         }
-        /*public async Task UpdateDuringRideAsync(Position position, double speed)
-        {
-            var stat = await GetStatisticAsync();
-
-            await CreateRealmDB();
-
-            await RealmDB!.WriteAsync(() =>
-            {
-                stat.Positions.Add(position);
-                stat.Speed = speed;
-            });
-        }*/
         private async Task CreateAsync(Statistic statistic)
         {
             await CreateRealmDB();
