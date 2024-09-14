@@ -63,6 +63,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
@@ -71,6 +72,7 @@
 		<PackageReference Include="Shiny.Locations" Version="3.2.4" />
 		<PackageReference Include="Shiny.Hosting.Maui" version="3.2.4" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="Syncfusion.Pdf.NET" Version="26.2.11" />
 	</ItemGroup>
 
 	<ItemGroup>
