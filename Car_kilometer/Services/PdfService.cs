@@ -46,8 +46,8 @@ namespace Car_kilometer.Services
                 {
                     PdfGridRow row = pdfGrid.Rows.Add();
                     row.Cells[0].Value = ride.Description;
-                    row.Cells[1].Value = ride.Distance;
-                    row.Cells[2].Value = ride.Duration;
+                    row.Cells[1].Value = ride.Distance.ToString();
+                    row.Cells[2].Value = ride.Duration.ToString();
                 }
 
                 // Dessiner le tableau sur la page PDF
