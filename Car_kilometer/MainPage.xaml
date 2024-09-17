@@ -8,7 +8,7 @@
             <RowDefinition Height="150"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -61,7 +61,19 @@
                VerticalOptions="End"
                Grid.Row="2"
                />
+        <VerticalStackLayout Grid.Row="3" Grid.ColumnSpan="2">
+            <Button Text="View Rides" Clicked="ViewRidesButton_Clicked" WidthRequest="300" HeightRequest="75" Margin="50"/>
+            <Button 
+               Text="Create PDF"
+               FontAttributes="Bold"
+               BackgroundColor="Red"
+               Clicked="CreatePdfButton_Clicked"
+               WidthRequest="300" 
+               HeightRequest="75"/>
+        </VerticalStackLayout>
 
     </Grid>
+
+
 
 </ContentPage>

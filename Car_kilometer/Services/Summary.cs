@@ -3,6 +3,7 @@ using Car_kilometer.Models;
 using Car_kilometer.NewFolder;
 using MongoDB.Bson;
 using Shiny.Locations;
+using Shiny.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Car_kilometer.Services
 {
     public class Summary
     {
-        private  ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
+        private ObjectId id = new ObjectId("65babe06fc322e9b1a2552c3");
         
         public Statistic? Statistic = null;
 
@@ -35,10 +36,8 @@ namespace Car_kilometer.Services
                 {
                     Id = id,
                     TotalSecondDurations = 0,
-                    TotalRides = 0,
-                    Speed = 0,
-                    TotalDistanceDuringRide = 0,
-                    Positions = new List<Position>()
+                    TotalDistance = 0,
+                    TotalRides = 0
                 };
                 await CreateAsync(stat);
                 Statistic = stat;
@@ -47,7 +46,6 @@ namespace Car_kilometer.Services
             {
                 Statistic = _stat;
             }
-
 
             return Statistic;
         }
@@ -58,19 +56,60 @@ namespace Car_kilometer.Services
             {
                 return;
             }
+
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Path.Combine(Environment.GetFolderPath(folder), "my.realm");
             var config = new RealmConfiguration(path)
             {
-                SchemaVersion = 1,
+                SchemaVersion = 7,
                 IsReadOnly = false,
+                MigrationCallback = (migration, oldSchemaVersion) =>
+                {
+                    if (oldSchemaVersion < 7)
+                    {
+                        var oldStatistics = migration.OldRealm.DynamicApi.All("Statistic");
+                        var newStatistics = migration.NewRealm.All<Statistic>();
 
+                        for (int i = 0; i < oldStatistics.Count(); i++)
+                        {
+                            var oldStatistic = oldStatistics.ElementAt(i);
+                            var newStatistic = newStatistics.ElementAt(i);
+
+                            // Mise à jour des propriétés existantes
+                            newStatistic.TotalDistance = oldStatistic.DynamicApi.Get<double>("TotalDistance");
+                            newStatistic.TotalSecondDurations = oldStatistic.DynamicApi.Get<double>("TotalSecondDurations");
+                            newStatistic.TotalRides = oldStatistic.DynamicApi.Get<int>("TotalRides");
+
+                            // Migration des rides
+                            var oldRides = oldStatistic.DynamicApi.GetList<IRealmObjectBase>("Rides");
+
+                            // Migration des rides
+                            foreach (var oldRide in oldRides)
+                            {
+                                // Extraire manuellement les propriétés nécessaires
+                                var distance = oldRide.DynamicApi.Get<double>("Distance");
+                                var duration = oldRide.DynamicApi.Get<double>("Duration");
+
+                                // Créer un nouvel objet Ride dans le nouveau schéma
+                                var newRide = new Ride
+                                {
+                                    Distance = distance,
+                                    Duration = duration,
+                                    Description = "Default Description"  // Utilisation d'une valeur par défaut
+                                };
+                                newStatistic.Rides.Add(newRide);
+                            }
+                        }
+                    }
+                }
             };
 
-            RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(true);
+
+            RealmDB = await Realm.GetInstanceAsync(config).ConfigureAwait(false);
         }
 
-        public async Task UpdateAsync(TimeSpan seconds, double distance)
+
+        public async Task UpdateAsync(TimeSpan seconds, double distance, Ride ride)
         {
             var stat = await GetStatisticAsync();
 
@@ -81,20 +120,7 @@ namespace Car_kilometer.Services
                 stat.TotalSecondDurations += seconds.TotalSeconds;
                 stat.TotalRides += 1;
                 stat.TotalDistance += distance;
-                stat.TotalDistanceDuringRide = 0;
-                stat.Speed = 0;
-            });
-        }
-        public async Task UpdateDuringRideAsync(Position position, double speed)
-        {
-            var stat = await GetStatisticAsync();
-
-            await CreateRealmDB();
-
-            await RealmDB!.WriteAsync(() =>
-            {
-                stat.Positions.Add(position);
-                stat.Speed = speed;
+                stat.Rides.Add(ride);
             });
         }
         private async Task CreateAsync(Statistic statistic)
