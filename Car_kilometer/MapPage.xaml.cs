@@ -136,7 +136,7 @@ public partial class MapPage : ContentPage
     private async Task Add(string description)
     {
         double _distance = _sharedDto.TotalDistanceDuringRide / 1000;
-        await _summary.UpdateAsync(stopwatch.Elapsed, _distance, new Ride(description, _distance, stopwatch.Elapsed));
+        await _summary.UpdateAsync(stopwatch.Elapsed, _distance, new Ride(description, _distance, stopwatch.Elapsed, DateTime.Now));
         _sharedDto.TotalDistanceDuringRide = 0;
     }
 

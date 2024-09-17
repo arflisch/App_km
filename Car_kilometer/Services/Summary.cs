@@ -61,11 +61,11 @@ namespace Car_kilometer.Services
             var path = Path.Combine(Environment.GetFolderPath(folder), "my.realm");
             var config = new RealmConfiguration(path)
             {
-                SchemaVersion = 7,
+                SchemaVersion = 8,
                 IsReadOnly = false,
                 MigrationCallback = (migration, oldSchemaVersion) =>
                 {
-                    if (oldSchemaVersion < 7)
+                    if (oldSchemaVersion < 8)
                     {
                         var oldStatistics = migration.OldRealm.DynamicApi.All("Statistic");
                         var newStatistics = migration.NewRealm.All<Statistic>();
@@ -95,7 +95,8 @@ namespace Car_kilometer.Services
                                 {
                                     Distance = distance,
                                     Duration = duration,
-                                    Description = "Default Description"  // Utilisation d'une valeur par défaut
+                                    Description = "Default Description",
+                                    Date = DateTime.UtcNow    // Utilisation d'une valeur par défaut
                                 };
                                 newStatistic.Rides.Add(newRide);
                             }

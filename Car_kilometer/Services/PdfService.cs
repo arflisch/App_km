@@ -32,15 +32,16 @@ namespace Car_kilometer.Services
                 PdfGrid pdfGrid = new PdfGrid();
 
                 // Ajouter des colonnes au tableau
-                pdfGrid.Columns.Add(4);
+                pdfGrid.Columns.Add(5);
                 pdfGrid.Headers.Add(1);
 
                 // Ajouter des en-têtes au tableauje 
                 PdfGridRow pdfGridHeader = pdfGrid.Headers[0];
                 pdfGridHeader.Cells[0].Value = "No.";
-                pdfGridHeader.Cells[1].Value = "Descrition";
-                pdfGridHeader.Cells[2].Value = "Distance (km)";
-                pdfGridHeader.Cells[3].Value = "Duration";
+                pdfGridHeader.Cells[1].Value = "Date";
+                pdfGridHeader.Cells[2].Value = "Descrition";
+                pdfGridHeader.Cells[3].Value = "Distance (km)";
+                pdfGridHeader.Cells[4].Value = "Duration";
 
                 int rideNumber = 1;
 
@@ -49,9 +50,10 @@ namespace Car_kilometer.Services
                 {
                     PdfGridRow row = pdfGrid.Rows.Add();
                     row.Cells[0].Value = rideNumber.ToString();
-                    row.Cells[1].Value = ride.Description;
-                    row.Cells[2].Value = $"{(int)TimeSpan.FromSeconds(ride.Duration).TotalHours}h{TimeSpan.FromSeconds(ride.Duration).Minutes:D2}";
-                    row.Cells[3].Value = ride.Distance.ToString("F1");
+                    row.Cells[1].Value = ride.Date.ToString("yyyy-MM-dd");
+                    row.Cells[2].Value = ride.Description;
+                    row.Cells[3].Value = $"{(int)TimeSpan.FromSeconds(ride.Duration).TotalHours}h{TimeSpan.FromSeconds(ride.Duration).Minutes:D2}";
+                    row.Cells[4].Value = ride.Distance.ToString("F1");
                     
                     rideNumber++;
                 }
