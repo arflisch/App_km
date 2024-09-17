@@ -14,7 +14,7 @@ namespace Car_kilometer.Services
 {
     public class PdfService
     {
-        public void CreateRidesPdf(string filePath, IList<Ride> rides)
+        public void CreateRidesPdf(string filePath, Statistic statistic)
         {
             // Créer un document PDF
             using (PdfDocument pdfDocument = new PdfDocument())
@@ -32,26 +32,41 @@ namespace Car_kilometer.Services
                 PdfGrid pdfGrid = new PdfGrid();
 
                 // Ajouter des colonnes au tableau
-                pdfGrid.Columns.Add(3);
+                pdfGrid.Columns.Add(4);
                 pdfGrid.Headers.Add(1);
 
                 // Ajouter des en-têtes au tableauje 
                 PdfGridRow pdfGridHeader = pdfGrid.Headers[0];
-                pdfGridHeader.Cells[0].Value = "Descrition";
-                pdfGridHeader.Cells[1].Value = "Distance (km)";
-                pdfGridHeader.Cells[2].Value = "Duration";
+                pdfGridHeader.Cells[0].Value = "No.";
+                pdfGridHeader.Cells[1].Value = "Descrition";
+                pdfGridHeader.Cells[2].Value = "Distance (km)";
+                pdfGridHeader.Cells[3].Value = "Duration";
+
+                int rideNumber = 1;
 
                 // Ajouter les données des rides au tableau
-                foreach (var ride in rides)
+                foreach (var ride in statistic.Rides)
                 {
                     PdfGridRow row = pdfGrid.Rows.Add();
-                    row.Cells[0].Value = ride.Description;
-                    row.Cells[1].Value = ride.Distance.ToString("F1");
+                    row.Cells[0].Value = rideNumber.ToString();
+                    row.Cells[1].Value = ride.Description;
                     row.Cells[2].Value = $"{(int)TimeSpan.FromSeconds(ride.Duration).TotalHours}h{TimeSpan.FromSeconds(ride.Duration).Minutes:D2}";
+                    row.Cells[3].Value = ride.Distance.ToString("F1");
+                    
+                    rideNumber++;
                 }
 
                 // Dessiner le tableau sur la page PDF
                 pdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 50));
+
+                string totalKmText = $"Total: {statistic.TotalDistance:F1} km";
+
+                // Mesurer la taille du texte pour le placer correctement
+                float textWidth = font.MeasureString(totalKmText).Width;
+
+                // Dessiner le texte aligné à droite
+                page.Graphics.DrawString(totalKmText, font, PdfBrushes.Black,
+                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - textWidth - 10, pdfGrid.Rows.Count * 20 + 70));
 
                 // Enregistrer le PDF dans un fichier
                 using (FileStream outputFileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))

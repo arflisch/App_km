@@ -75,7 +75,7 @@ namespace Car_kilometer
             var statistic = await _summary.GetStatisticAsync();
 
             var pdfService = new PdfService();
-            pdfService.CreateRidesPdf(filePath, statistic.Rides);
+            pdfService.CreateRidesPdf(filePath, statistic);
 
             if (!File.Exists(filePath))
             {
