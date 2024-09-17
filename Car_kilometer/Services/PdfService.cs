@@ -46,8 +46,8 @@ namespace Car_kilometer.Services
                 {
                     PdfGridRow row = pdfGrid.Rows.Add();
                     row.Cells[0].Value = ride.Description;
-                    row.Cells[1].Value = ride.Distance.ToString();
-                    row.Cells[2].Value = ride.Duration.ToString();
+                    row.Cells[1].Value = ride.Distance.ToString("F1");
+                    row.Cells[2].Value = $"{(int)TimeSpan.FromSeconds(ride.Duration).TotalHours}h{TimeSpan.FromSeconds(ride.Duration).Minutes:D2}";
                 }
 
                 // Dessiner le tableau sur la page PDF
