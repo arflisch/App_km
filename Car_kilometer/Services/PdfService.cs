@@ -32,7 +32,7 @@ namespace Car_kilometer.Services
                 PdfGrid pdfGrid = new PdfGrid();
 
                 // Ajouter des colonnes au tableau
-                pdfGrid.Columns.Add(5);
+                pdfGrid.Columns.Add(6);
                 pdfGrid.Headers.Add(1);
 
                 // Ajouter des en-têtes au tableauje 
@@ -40,8 +40,9 @@ namespace Car_kilometer.Services
                 pdfGridHeader.Cells[0].Value = "No.";
                 pdfGridHeader.Cells[1].Value = "Date";
                 pdfGridHeader.Cells[2].Value = "Descrition";
-                pdfGridHeader.Cells[3].Value = "Distance (km)";
+                pdfGridHeader.Cells[3].Value = "Meteo";
                 pdfGridHeader.Cells[4].Value = "Duration";
+                pdfGridHeader.Cells[5].Value = "Distance (km)";
 
                 int rideNumber = 1;
 
@@ -52,8 +53,9 @@ namespace Car_kilometer.Services
                     row.Cells[0].Value = rideNumber.ToString();
                     row.Cells[1].Value = ride.Date.ToString("yyyy-MM-dd");
                     row.Cells[2].Value = ride.Description;
-                    row.Cells[3].Value = $"{(int)TimeSpan.FromSeconds(ride.Duration).TotalHours}h{TimeSpan.FromSeconds(ride.Duration).Minutes:D2}";
-                    row.Cells[4].Value = ride.Distance.ToString("F1");
+                    row.Cells[3].Value = ride.WeatherCondition.ToString();
+                    row.Cells[4].Value = $"{(int)TimeSpan.FromSeconds(ride.Duration).TotalHours}h{TimeSpan.FromSeconds(ride.Duration).Minutes:D2}";
+                    row.Cells[5].Value = ride.Distance.ToString("F1");
                     
                     rideNumber++;
                 }
@@ -68,7 +70,7 @@ namespace Car_kilometer.Services
 
                 // Dessiner le texte aligné à droite
                 page.Graphics.DrawString(totalKmText, font, PdfBrushes.Black,
-                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - textWidth - 10, pdfGrid.Rows.Count * 20 + 70));
+                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - textWidth - 10, pdfGrid.Rows.Count * 20 + 30));
 
                 // Enregistrer le PDF dans un fichier
                 using (FileStream outputFileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))

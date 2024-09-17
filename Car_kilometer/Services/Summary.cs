@@ -61,11 +61,11 @@ namespace Car_kilometer.Services
             var path = Path.Combine(Environment.GetFolderPath(folder), "my.realm");
             var config = new RealmConfiguration(path)
             {
-                SchemaVersion = 8,
+                SchemaVersion = 9,
                 IsReadOnly = false,
                 MigrationCallback = (migration, oldSchemaVersion) =>
                 {
-                    if (oldSchemaVersion < 8)
+                    if (oldSchemaVersion < 9)
                     {
                         var oldStatistics = migration.OldRealm.DynamicApi.All("Statistic");
                         var newStatistics = migration.NewRealm.All<Statistic>();
