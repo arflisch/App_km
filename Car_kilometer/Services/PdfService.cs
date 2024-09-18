@@ -70,7 +70,7 @@ namespace Car_kilometer.Services
 
                 // Dessiner le texte aligné à droite
                 page.Graphics.DrawString(totalKmText, font, PdfBrushes.Black,
-                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - textWidth - 10, pdfGrid.Rows.Count * 20 + 30));
+                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - textWidth - 10, pdfGrid.Rows.Count * 20 + 50));
 
                 // Enregistrer le PDF dans un fichier
                 using (FileStream outputFileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
