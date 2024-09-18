@@ -107,23 +107,29 @@ public partial class MapPage : ContentPage
 
                 if (!string.IsNullOrEmpty(description))
                 {
-                    await Add(description);
+                    string weatherCondition = await DisplayActionSheet("Weather Condition", "Cancel", null, "Sunny", "Cloudy", "Rainy", "Windy", "Snowy", "Night");
 
-                    // Reset the stopwatch and UI
-                    stopwatch.Reset();
-                    Dispatcher.Dispatch(() =>
+                    if (weatherCondition != "Cancel")
                     {
-                        timerLabel.Text = "00:00:00";
-                        KmLabel.Text = "0";
-                        SpeedLabel.Text = "0";
-                    });
+                        // Ajouter l'activité avec la description et la météo
+                        await Add(description, weatherCondition);
 
-                    stopButton.IsVisible = false;
-                    pauseButton.IsVisible = false;
-                    resumeButton.IsVisible = false;
-                    startButton.IsVisible = true;
+                        // Reset the stopwatch and UI
+                        stopwatch.Reset();
+                        Dispatcher.Dispatch(() =>
+                        {
+                            timerLabel.Text = "00:00:00";
+                            KmLabel.Text = "0";
+                            SpeedLabel.Text = "0";
+                        });
 
-                    isTimerRunning = false;
+                        stopButton.IsVisible = false;
+                        pauseButton.IsVisible = false;
+                        resumeButton.IsVisible = false;
+                        startButton.IsVisible = true;
+
+                        isTimerRunning = false;
+                    }
                 }
             }
             else
@@ -133,10 +139,10 @@ public partial class MapPage : ContentPage
         }
     }
 
-    private async Task Add(string description)
+    private async Task Add(string description, string weatherCondition)
     {
         double _distance = _sharedDto.TotalDistanceDuringRide / 1000;
-        await _summary.UpdateAsync(stopwatch.Elapsed, _distance, new Ride(description, _distance, stopwatch.Elapsed));
+        await _summary.UpdateAsync(stopwatch.Elapsed, _distance, new Ride(description, _distance, stopwatch.Elapsed, DateTime.Now, weatherCondition));
         _sharedDto.TotalDistanceDuringRide = 0;
     }
 

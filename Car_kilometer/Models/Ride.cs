@@ -15,14 +15,18 @@ namespace Car_kilometer.NewFolder
             Description = string.Empty;
             Distance = 0;
             Duration = 0;
+            Date = DateTime.UtcNow;
+            WeatherCondition = string.Empty;
         }
 
-        public Ride(string description, double distance, TimeSpan duration)
+        public Ride(string description, double distance, TimeSpan duration, DateTime date, string weatherCondition)
         {
             Id = ObjectId.GenerateNewId();
             Description = description;
             Distance = distance;
             Duration = duration.TotalSeconds;
+            Date = date;
+            WeatherCondition = weatherCondition;
         }
 
         [PrimaryKey]
@@ -31,7 +35,10 @@ namespace Car_kilometer.NewFolder
         public string Description { get; set; }
         public double Distance { get; set; }
         public double Duration { get; set; }
+        public DateTimeOffset Date { get; set; }
+        public string WeatherCondition { get; set; } 
     }
+
 
 }
 
