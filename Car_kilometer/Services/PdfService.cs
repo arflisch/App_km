@@ -14,7 +14,7 @@ namespace Car_kilometer.Services
 {
     public class PdfService
     {
-        public void CreateRidesPdf(string filePath, Statistic statistic)
+        public void CreateRidesPdf(string filePath, Statistic statistic, string firstName, string lastName)
         {
             // Créer un document PDF
             using (PdfDocument pdfDocument = new PdfDocument())
@@ -28,6 +28,12 @@ namespace Car_kilometer.Services
                 // Ajouter un titre
                 page.Graphics.DrawString("List of Rides", new PdfStandardFont(PdfFontFamily.Helvetica, 20), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
 
+                // Afficher le prénom et le nom en haut à droite
+                string nameText = $"{firstName} {lastName}";
+                float nameWidth = font.MeasureString(nameText).Width;
+                page.Graphics.DrawString(nameText, font, PdfBrushes.Black,
+                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - nameWidth - 10, 0));
+
                 // Créer un tableau pour afficher les données des rides
                 PdfGrid pdfGrid = new PdfGrid();
 
@@ -35,11 +41,11 @@ namespace Car_kilometer.Services
                 pdfGrid.Columns.Add(6);
                 pdfGrid.Headers.Add(1);
 
-                // Ajouter des en-têtes au tableauje 
+                // Ajouter des en-têtes au tableau
                 PdfGridRow pdfGridHeader = pdfGrid.Headers[0];
                 pdfGridHeader.Cells[0].Value = "No.";
                 pdfGridHeader.Cells[1].Value = "Date";
-                pdfGridHeader.Cells[2].Value = "Descrition";
+                pdfGridHeader.Cells[2].Value = "Description";
                 pdfGridHeader.Cells[3].Value = "Meteo";
                 pdfGridHeader.Cells[4].Value = "Duration";
                 pdfGridHeader.Cells[5].Value = "Distance (km)";
@@ -56,21 +62,22 @@ namespace Car_kilometer.Services
                     row.Cells[3].Value = ride.WeatherCondition.ToString();
                     row.Cells[4].Value = $"{(int)TimeSpan.FromSeconds(ride.Duration).TotalHours}h{TimeSpan.FromSeconds(ride.Duration).Minutes:D2}";
                     row.Cells[5].Value = ride.Distance.ToString("F1");
-                    
+
                     rideNumber++;
                 }
 
                 // Dessiner le tableau sur la page PDF
                 pdfGrid.Draw(page, new Syncfusion.Drawing.PointF(0, 50));
 
+                // Ajouter le total des kilomètres en bas à droite du tableau
                 string totalKmText = $"Total: {statistic.TotalDistance:F1} km";
 
                 // Mesurer la taille du texte pour le placer correctement
-                float textWidth = font.MeasureString(totalKmText).Width;
+                float totalKmTextWidth = font.MeasureString(totalKmText).Width;
 
                 // Dessiner le texte aligné à droite
                 page.Graphics.DrawString(totalKmText, font, PdfBrushes.Black,
-                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - textWidth - 10, pdfGrid.Rows.Count * 20 + 50));
+                    new Syncfusion.Drawing.PointF(page.GetClientSize().Width - totalKmTextWidth - 10, pdfGrid.Rows.Count * 20 + 60));
 
                 // Enregistrer le PDF dans un fichier
                 using (FileStream outputFileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
@@ -82,5 +89,6 @@ namespace Car_kilometer.Services
                 Console.WriteLine($"PDF created at: {filePath}");
             }
         }
+
     }
 }

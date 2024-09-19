@@ -60,6 +60,28 @@ namespace Car_kilometer
 
         private async void CreatePdfButton_Clicked(object sender, EventArgs e)
         {
+            string firstName = await DisplayPromptAsync("Enter First Name", "Please enter your first name:",
+                                                maxLength: 50,
+                                                keyboard: Keyboard.Text);
+
+            if (string.IsNullOrEmpty(firstName))
+            {
+                await DisplayAlert("Error", "First name is required. Cannot send the PDF.", "OK");
+                return;
+            }
+
+            // Demander le nom
+            string lastName = await DisplayPromptAsync("Enter Last Name", "Please enter your last name:",
+                                                       maxLength: 50,
+                                                       keyboard: Keyboard.Text);
+
+            if (string.IsNullOrEmpty(lastName))
+            {
+                await DisplayAlert("Error", "Last name is required. Cannot send the PDF.", "OK");
+                return;
+            }
+
+            // Demander l'adresse email
             string recipientEmail = await DisplayPromptAsync("Enter Email", "Please enter the recipient's email address:",
                                                              maxLength: 50,
                                                              keyboard: Keyboard.Email);
@@ -75,7 +97,7 @@ namespace Car_kilometer
             var statistic = await _summary.GetStatisticAsync();
 
             var pdfService = new PdfService();
-            pdfService.CreateRidesPdf(filePath, statistic);
+            pdfService.CreateRidesPdf(filePath, statistic, firstName, lastName);
 
             if (!File.Exists(filePath))
             {
