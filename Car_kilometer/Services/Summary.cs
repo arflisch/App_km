@@ -1,5 +1,4 @@
-﻿using Android.Util;
-using Car_kilometer.Models;
+﻿using Car_kilometer.Models;
 using Car_kilometer.NewFolder;
 using MongoDB.Bson;
 using Shiny.Locations;

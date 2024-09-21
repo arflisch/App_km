@@ -29,7 +29,7 @@ namespace Car_kilometer.Services
                 page.Graphics.DrawString("List of Rides", new PdfStandardFont(PdfFontFamily.Helvetica, 20), PdfBrushes.Black, new Syncfusion.Drawing.PointF(0, 0));
 
                 // Afficher le prénom et le nom en haut à droite
-                string nameText = $"{firstName} {lastName}";
+                string nameText = $"{lastName.ToUpper()} {firstName}";
                 float nameWidth = font.MeasureString(nameText).Width;
                 page.Graphics.DrawString(nameText, font, PdfBrushes.Black,
                     new Syncfusion.Drawing.PointF(page.GetClientSize().Width - nameWidth - 10, 0));
@@ -51,6 +51,8 @@ namespace Car_kilometer.Services
                 pdfGridHeader.Cells[5].Value = "Distance (km)";
 
                 int rideNumber = 1;
+
+                pdfGrid.Columns[0].Width = 50;
 
                 // Ajouter les données des rides au tableau
                 foreach (var ride in statistic.Rides)
