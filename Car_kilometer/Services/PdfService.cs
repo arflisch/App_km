@@ -52,7 +52,7 @@ namespace Car_kilometer.Services
 
                 int rideNumber = 1;
 
-                pdfGrid.Columns[0].Width = 50;
+                pdfGrid.Columns[0].Width = 30;
 
                 // Ajouter les données des rides au tableau
                 foreach (var ride in statistic.Rides)

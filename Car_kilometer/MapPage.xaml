@@ -3,80 +3,117 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Car_kilometer.MapPage"
              Title="MapPage">
-    <Grid>
+
+    <Grid Padding="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="550"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Informations Km, Vitesse et Temps -->
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="KmLabel"
-                   Text="0"
-                   FontSize="80"
-                   Grid.Row="0"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   />
+            <!-- Distance en Km -->
+            <StackLayout Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label x:Name="KmLabel"
+                       Text="0"
+                       FontSize="80"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Km"
+                       FontSize="24"
+                       TextColor="#7F8C8D"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="End"/>
+            </StackLayout>
 
-            <Label  Text="Km"
-                    FontSize="24"
-                    Grid.Row="0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="End"/>
+            <!-- Vitesse -->
+            <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label x:Name="SpeedLabel"
+                       Text="0"
+                       FontSize="80"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Km/h"
+                       FontSize="24"
+                       TextColor="#7F8C8D"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="End"/>
+            </StackLayout>
 
-            <Label x:Name="SpeedLabel"
-                   Text="0"
-                   FontSize="80"
-                   Grid.Row="0"
-                   Grid.Column="1"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
-
-            <Label Text="Km/h"
-                   FontSize="24"
-                   Grid.Row="0"
-                   Grid.Column="1"
-                   HorizontalOptions="Center"
-                   VerticalOptions="End"/>
-
-            <Label x:Name="timerLabel"
-                   Text="00:00:00"
-                   FontSize="80"
-                   Grid.Row="1"
-                   Grid.ColumnSpan="3"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
-
-            <Label Text="Time"
-                   FontSize="24"
-                   Grid.Row="1"
-                   Grid.ColumnSpan="2"
-                   HorizontalOptions="Center"
-                   VerticalOptions="End"/>
+            <!-- Chronomètre -->
+            <StackLayout Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label x:Name="timerLabel"
+                       Text="00:00:00"
+                       FontSize="80"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Time"
+                       FontSize="24"
+                       TextColor="#7F8C8D"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="End"/>
+            </StackLayout>
 
         </Grid>
 
-        
-        <Button x:Name="startButton"
-                Text="Start"
-                Clicked="StartButton_Clicked"
-                FontSize="40"
-                Grid.Row="1"/>
-        <Button x:Name="resumeButton" Text="Resume" Clicked="ResumeButton_Clicked" IsVisible="False" FontSize="40" Grid.Row="1"/>
-        <FlexLayout Direction="Row" Grid.Row="1" JustifyContent="SpaceEvenly" AlignItems="Center">
-            <Button x:Name="stopButton" Text="Stop" FontSize="24" Padding="20" Clicked="StopButton_Clicked" IsVisible="False" Grid.Row="1" />
-            <Button x:Name="pauseButton" Text="Pause" FontSize="24" Padding="20" Clicked="PauseButton_Clicked" IsVisible="False" Grid.Row="1" />
-        </FlexLayout>
-        
+        <!-- Boutons Start, Pause, Stop, Resume -->
+        <StackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
+            <Button x:Name="startButton"
+                    Text="Start"
+                    Clicked="StartButton_Clicked"
+                    FontSize="40"
+                    BackgroundColor="#2ECC71"
+                    TextColor="White"
+                    CornerRadius="25"
+                    WidthRequest="300"
+                    HeightRequest="75"/>
 
+            <Button x:Name="resumeButton"
+                    Text="Resume"
+                    Clicked="ResumeButton_Clicked"
+                    FontSize="40"
+                    BackgroundColor="#3498DB"
+                    TextColor="White"
+                    CornerRadius="25"
+                    WidthRequest="300"
+                    HeightRequest="75"
+                    IsVisible="False"/>
+
+            <!-- Boutons Pause et Stop -->
+            <FlexLayout Direction="Row" JustifyContent="SpaceEvenly" AlignItems="Center">
+                <Button x:Name="stopButton"
+                        Text="Stop"
+                        Clicked="StopButton_Clicked"
+                        FontSize="24"
+                        Padding="20"
+                        BackgroundColor="#E74C3C"
+                        TextColor="White"
+                        CornerRadius="20"
+                        WidthRequest="140"
+                        HeightRequest="60"
+                        IsVisible="False"/>
+
+                <Button x:Name="pauseButton"
+                        Text="Pause"
+                        Clicked="PauseButton_Clicked"
+                        FontSize="24"
+                        Padding="20"
+                        BackgroundColor="#F39C12"
+                        TextColor="White"
+                        CornerRadius="20"
+                        WidthRequest="140"
+                        HeightRequest="60"
+                        IsVisible="False"/>
+            </FlexLayout>
+        </StackLayout>
     </Grid>
 </ContentPage>

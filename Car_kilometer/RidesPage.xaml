@@ -4,16 +4,51 @@
              x:Class="Car_kilometer.RidesPage"
              Title="Rides">
 
-    <StackLayout Padding="10">
-        <ListView x:Name="RidesListView" HasUnevenRows="True">
+    <StackLayout Padding="20">
+        <!-- Liste des rides -->
+        <ListView x:Name="RidesListView" HasUnevenRows="True" SeparatorVisibility="Default" SeparatorColor="#D3D3D3">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
-                            <Label Text="{Binding Description}" FontAttributes="Bold" />
-                            <Label Text="{Binding Distance}" />
-                            <Label Text="{Binding Duration}" />
-                        </StackLayout>
+                        <Frame BorderColor="#D3D3D3" CornerRadius="10" Padding="10" Margin="5" BackgroundColor="White">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Description du ride -->
+                                <Label Grid.Row="0" Grid.Column="0" 
+                                       Text="{Binding Description}" 
+                                       FontAttributes="Bold" 
+                                       FontSize="18"
+                                       TextColor="#34495E"
+                                       HorizontalTextAlignment="Start" 
+                                       VerticalTextAlignment="Start"/>
+
+                                <!-- Durée du ride -->
+                                <Label Grid.Row="1" Grid.Column="0" 
+                                       Text="{Binding Duration}" 
+                                       FontSize="14"
+                                       TextColor="#7F8C8D"
+                                       HorizontalTextAlignment="Start" 
+                                       VerticalTextAlignment="End"/>
+
+                                <!-- Distance du ride -->
+                                <Label Grid.Row="0" Grid.Column="1" 
+                                       Grid.RowSpan="2" 
+                                       Text="{Binding Distance}" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold"
+                                       TextColor="#E67E22"
+                                       HorizontalTextAlignment="End" 
+                                       VerticalTextAlignment="Center"/>
+                            </Grid>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
