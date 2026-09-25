@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Car_kilometer.ViewModels"
+             xmlns:models="clr-namespace:Car_kilometer.Models"
+             xmlns:controls="clr-namespace:Car_kilometer.Views.Controls"
+             xmlns:strings="clr-namespace:Car_kilometer.Resources.Strings"
+             xmlns:icons="clr-namespace:Car_kilometer.Resources"
+             x:Class="Car_kilometer.Views.HomePage"
+             x:DataType="vm:HomeViewModel"
+             Title="{x:Static strings:AppResources.TabHome}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,32" Spacing="20">
+
+            <!-- Greeting -->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                    <Label Text="{Binding Today}" Style="{StaticResource Caption}" />
+                    <Label Text="{Binding Greeting}" Style="{StaticResource Title}" />
+                </VerticalStackLayout>
+                <Button Grid.Column="1"
+                        Text="{x:Static icons:Icons.Pdf}"
+                        Style="{StaticResource IconButton}"
+                        Command="{Binding ExportCommand}"
+                        SemanticProperties.Description="{x:Static strings:AppResources.ExportPdf}"
+                        VerticalOptions="Center" />
+            </Grid>
+
+            <!-- Ride being recorded -->
+            <Border Style="{StaticResource Card}" Padding="16,14" IsVisible="{Binding IsRecording}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NewRideCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <BoxView Color="{StaticResource Danger}" WidthRequest="10" HeightRequest="10" CornerRadius="5" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="{x:Static strings:AppResources.RideInProgress}" FontFamily="ManropeSemiBold" VerticalOptions="Center" />
+                    <Label Grid.Column="2" Text="{x:Static icons:Icons.ChevronRight}" Style="{StaticResource Glyph}" />
+                </Grid>
+            </Border>
+
+            <!-- Totals -->
+            <Border Style="{StaticResource HeroCard}">
+                <VerticalStackLayout Spacing="0">
+                    <Label Text="{x:Static strings:AppResources.TotalDistance}"
+                           TextColor="{StaticResource OnHeroMuted}"
+                           FontFamily="ManropeSemiBold"
+                           FontSize="13" />
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{Binding TotalDistance}"
+                               TextColor="{StaticResource OnHero}"
+                               FontFamily="ManropeExtraBold"
+                               FontSize="46" />
+                        <Label Text="km"
+                               TextColor="{StaticResource OnHeroMuted}"
+                               FontFamily="ManropeSemiBold"
+                               FontSize="18"
+                               VerticalOptions="End"
+                               Margin="0,0,0,11" />
+                    </HorizontalStackLayout>
+
+                    <BoxView HeightRequest="1" Color="{StaticResource OnHeroSubtle}" Margin="0,12,0,16" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <HorizontalStackLayout Spacing="10">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource OnHeroSubtle}">
+                                <Label Text="{x:Static icons:Icons.Route}" Style="{StaticResource Glyph}" TextColor="{StaticResource OnHero}" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="{Binding TotalRides}" TextColor="{StaticResource OnHero}" FontFamily="ManropeExtraBold" FontSize="17" />
+                                <Label Text="{x:Static strings:AppResources.StatRides}" TextColor="{StaticResource OnHeroMuted}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="{StaticResource OnHeroSubtle}">
+                                <Label Text="{x:Static icons:Icons.Schedule}" Style="{StaticResource Glyph}" TextColor="{StaticResource OnHero}" FontSize="20" />
+                            </Border>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="{Binding TotalTime}" TextColor="{StaticResource OnHero}" FontFamily="ManropeExtraBold" FontSize="17" />
+                                <Label Text="{x:Static strings:AppResources.StatDrivingTime}" TextColor="{StaticResource OnHeroMuted}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Actions -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Text="{x:Static strings:AppResources.HomeStartRide}" Command="{Binding NewRideCommand}" ContentLayout="Left,8" Padding="12,0">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.Play}" Color="{StaticResource White}" Size="22" />
+                    </Button.ImageSource>
+                </Button>
+                <Button Grid.Column="1"
+                        Text="{x:Static strings:AppResources.HomePdfReport}"
+                        Style="{StaticResource SecondaryButton}"
+                        Command="{Binding ExportCommand}"
+                        ContentLayout="Left,8"
+                        Padding="12,0">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="Icons"
+                                         Glyph="{x:Static icons:Icons.Pdf}"
+                                         Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryOnDark}}"
+                                         Size="20" />
+                    </Button.ImageSource>
+                </Button>
+            </Grid>
+
+            <!-- This month and the last 6 months -->
+            <Border Style="{StaticResource Card}" IsVisible="{Binding HasRides}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="{x:Static strings:AppResources.ThisMonth}" Style="{StaticResource Caption}" />
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{Binding MonthDistance}" Style="{StaticResource Heading}" FontSize="28" />
+                        <Label Text="km" Style="{StaticResource Muted}" FontFamily="ManropeSemiBold" FontSize="15" VerticalOptions="End" Margin="0,0,0,6" />
+                    </HorizontalStackLayout>
+                    <Label Text="{Binding MonthDetails}" Style="{StaticResource Muted}" />
+
+                    <FlexLayout BindableLayout.ItemsSource="{Binding MonthBars}"
+                                Direction="Row"
+                                JustifyContent="SpaceBetween"
+                                AlignItems="End"
+                                Margin="0,18,0,0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:MonthBar">
+                                <VerticalStackLayout Spacing="6" WidthRequest="44">
+                                    <Label Text="{Binding ValueText}"
+                                           Style="{StaticResource Muted}"
+                                           FontFamily="ManropeSemiBold"
+                                           FontSize="11"
+                                           HorizontalOptions="Center"
+                                           IsVisible="{Binding HasValue}" />
+                                    <Grid HeightRequest="88" WidthRequest="26" HorizontalOptions="Center">
+                                        <Border StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 9"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceAltLight}, Dark={StaticResource SurfaceAltDark}}" />
+                                        <Border StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 9"
+                                                VerticalOptions="End"
+                                                HeightRequest="{Binding BarHeight}"
+                                                IsVisible="{Binding HasValue}"
+                                                BackgroundColor="{AppThemeBinding Light={StaticResource BarLight}, Dark={StaticResource BarDark}}">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsCurrent}" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource HeroBrush}" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                        </Border>
+                                    </Grid>
+                                    <Label Text="{Binding Label}"
+                                           Style="{StaticResource Muted}"
+                                           FontSize="11"
+                                           HorizontalOptions="Center">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsCurrent}" Value="True">
+                                                <Setter Property="FontFamily" Value="ManropeExtraBold" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryOnDark}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Recent rides -->
+            <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasRides}" Margin="0,4,0,-6">
+                <Label Text="{x:Static strings:AppResources.RecentRides}" Style="{StaticResource SectionTitle}" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="{x:Static strings:AppResources.SeeAll}" Style="{StaticResource LinkText}" VerticalOptions="Center" Padding="8,6,0,6">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowHistoryCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentRides}" Spacing="10">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:RideItem">
+                        <controls:RideCard>
+                            <controls:RideCard.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRideTapped" />
+                            </controls:RideCard.GestureRecognizers>
+                        </controls:RideCard>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- First launch -->
+            <Border Style="{StaticResource Card}" Padding="24,28" IsVisible="{Binding IsEmpty}">
+                <VerticalStackLayout Spacing="10">
+                    <Border Style="{StaticResource IconBadge}" WidthRequest="60" HeightRequest="60" StrokeShape="RoundRectangle 20" HorizontalOptions="Center">
+                        <Label Text="{x:Static icons:Icons.Car}" Style="{StaticResource Glyph}" FontSize="30" />
+                    </Border>
+                    <Label Text="{x:Static strings:AppResources.EmptyTitle}" Style="{StaticResource SectionTitle}" HorizontalTextAlignment="Center" Margin="0,6,0,0" />
+                    <Label Text="{x:Static strings:AppResources.EmptyMessage}" Style="{StaticResource Muted}" FontSize="14" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

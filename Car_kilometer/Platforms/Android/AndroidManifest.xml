@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:supportsRtl="true" android:label="Car Kilometer"></application>
+	<application android:allowBackup="true" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:label="Car Kilometer"></application>
 	<queries>
 		<intent>
 			<action android:name="android.intent.action.SENDTO" />
@@ -9,13 +9,14 @@
 	</queries>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+	<!-- GPS, also while the screen is off (foreground service with a notification) -->
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.BATTERY_STATS" />
+	<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<!-- Haptic feedback on the ride buttons -->
+	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="34" />
 </manifest>

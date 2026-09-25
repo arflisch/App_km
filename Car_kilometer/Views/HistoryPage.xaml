@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Car_kilometer.ViewModels"
+             xmlns:models="clr-namespace:Car_kilometer.Models"
+             xmlns:controls="clr-namespace:Car_kilometer.Views.Controls"
+             xmlns:strings="clr-namespace:Car_kilometer.Resources.Strings"
+             xmlns:icons="clr-namespace:Car_kilometer.Resources"
+             x:Class="Car_kilometer.Views.HistoryPage"
+             x:DataType="vm:HistoryViewModel"
+             Title="{x:Static strings:AppResources.TabHistory}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header -->
+        <Grid Padding="20,16,20,4" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                <Label Text="{x:Static strings:AppResources.HistoryTitle}" Style="{StaticResource Title}" />
+                <Label Text="{Binding Summary}" Style="{StaticResource Muted}" IsVisible="{Binding HasRides}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1"
+                    Text="{x:Static icons:Icons.Pdf}"
+                    Style="{StaticResource IconButton}"
+                    Command="{Binding ExportCommand}"
+                    SemanticProperties.Description="{x:Static strings:AppResources.ExportPdf}"
+                    VerticalOptions="Center" />
+        </Grid>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Groups}"
+                        IsGrouped="True"
+                        SelectionMode="None">
+
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="vm:RideMonthGroup">
+                    <Grid Padding="20,18,20,6" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Text="{Binding Title}" Style="{StaticResource SectionTitle}" FontSize="16" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="{Binding Summary}" Style="{StaticResource Muted}" VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:RideItem">
+                    <Grid Padding="20,5">
+                        <SwipeView BackgroundColor="Transparent">
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItemView Invoked="OnDeleteInvoked">
+                                        <Border Margin="10,0,0,0"
+                                                WidthRequest="84"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 22"
+                                                BackgroundColor="{StaticResource Danger}">
+                                            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                                <Label Text="{x:Static icons:Icons.Delete}" Style="{StaticResource Glyph}" TextColor="{StaticResource White}" />
+                                                <Label Text="{x:Static strings:AppResources.Delete}" TextColor="{StaticResource White}" FontFamily="ManropeSemiBold" FontSize="12" HorizontalOptions="Center" />
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </SwipeItemView>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <controls:RideCard>
+                                <controls:RideCard.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnRideTapped" />
+                                </controls:RideCard.GestureRecognizers>
+                            </controls:RideCard>
+                        </SwipeView>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="40,60" Spacing="10" VerticalOptions="Center">
+                    <Border Style="{StaticResource IconBadge}" WidthRequest="64" HeightRequest="64" StrokeShape="RoundRectangle 22" HorizontalOptions="Center">
+                        <Label Text="{x:Static icons:Icons.History}" Style="{StaticResource Glyph}" FontSize="32" />
+                    </Border>
+                    <Label Text="{x:Static strings:AppResources.EmptyTitle}" Style="{StaticResource SectionTitle}" HorizontalTextAlignment="Center" Margin="0,8,0,0" />
+                    <Label Text="{x:Static strings:AppResources.EmptyMessage}" Style="{StaticResource Muted}" FontSize="14" HorizontalTextAlignment="Center" />
+                    <Button Text="{x:Static strings:AppResources.NewRide}"
+                            Command="{Binding NewRideCommand}"
+                            HorizontalOptions="Center"
+                            Margin="0,12,0,0" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.Footer>
+                <BoxView HeightRequest="24" Color="Transparent" />
+            </CollectionView.Footer>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

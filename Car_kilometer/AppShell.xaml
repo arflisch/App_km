@@ -3,23 +3,36 @@
     x:Class="Car_kilometer.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Car_kilometer"
+    xmlns:views="clr-namespace:Car_kilometer.Views"
+    xmlns:strings="clr-namespace:Car_kilometer.Resources.Strings"
+    xmlns:icons="clr-namespace:Car_kilometer.Resources"
     Shell.FlyoutBehavior="Disabled"
-    Title="Car_kilometer">
-
+    Title="{x:Static strings:AppResources.AppName}">
 
     <TabBar>
-        <Tab Title="Home">
-            <ShellContent Title="Home"
-                          ContentTemplate="{DataTemplate local:MainPage}"
-                          Route="MainPage" />
-        </Tab>
-        <Tab Title="Ride">
-            <ShellContent Title="Ride"
-                  ContentTemplate="{DataTemplate local:MapPage}"
-                  Route="MapPage" />
-        </Tab>
+        <ShellContent Title="{x:Static strings:AppResources.TabHome}"
+                      Route="home"
+                      ContentTemplate="{DataTemplate views:HomePage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.Home}" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent Title="{x:Static strings:AppResources.TabRide}"
+                      Route="ride"
+                      ContentTemplate="{DataTemplate views:RidePage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.Speed}" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent Title="{x:Static strings:AppResources.TabHistory}"
+                      Route="history"
+                      ContentTemplate="{DataTemplate views:HistoryPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.History}" Size="24" />
+            </ShellContent.Icon>
+        </ShellContent>
     </TabBar>
-    
 
 </Shell>

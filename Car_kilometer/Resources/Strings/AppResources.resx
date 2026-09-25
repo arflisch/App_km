@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>Car Kilometer</value>
+  </data>
+  <data name="TabHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="TabRide" xml:space="preserve">
+    <value>Ride</value>
+  </data>
+  <data name="TabHistory" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Discard" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
+  <data name="DurationHoursFormat" xml:space="preserve">
+    <value>{0} h {1:00}</value>
+  </data>
+  <data name="DurationMinutesFormat" xml:space="preserve">
+    <value>{0} min</value>
+  </data>
+  <data name="RideCountOne" xml:space="preserve">
+    <value>{0} ride</value>
+  </data>
+  <data name="RideCountMany" xml:space="preserve">
+    <value>{0} rides</value>
+  </data>
+  <data name="PeriodRange" xml:space="preserve">
+    <value>{0} – {1}</value>
+  </data>
+  <data name="NoDescription" xml:space="preserve">
+    <value>Untitled ride</value>
+  </data>
+  <data name="WeatherSunny" xml:space="preserve">
+    <value>Sunny</value>
+  </data>
+  <data name="WeatherCloudy" xml:space="preserve">
+    <value>Cloudy</value>
+  </data>
+  <data name="WeatherRainy" xml:space="preserve">
+    <value>Rainy</value>
+  </data>
+  <data name="WeatherWindy" xml:space="preserve">
+    <value>Windy</value>
+  </data>
+  <data name="WeatherSnowy" xml:space="preserve">
+    <value>Snowy</value>
+  </data>
+  <data name="WeatherNight" xml:space="preserve">
+    <value>Night</value>
+  </data>
+  <data name="GreetingMorning" xml:space="preserve">
+    <value>Good morning</value>
+  </data>
+  <data name="GreetingAfternoon" xml:space="preserve">
+    <value>Good afternoon</value>
+  </data>
+  <data name="GreetingEvening" xml:space="preserve">
+    <value>Good evening</value>
+  </data>
+  <data name="GreetingWithName" xml:space="preserve">
+    <value>{0}, {1}</value>
+  </data>
+  <data name="TotalDistance" xml:space="preserve">
+    <value>Total distance</value>
+  </data>
+  <data name="StatRides" xml:space="preserve">
+    <value>Rides</value>
+  </data>
+  <data name="StatDrivingTime" xml:space="preserve">
+    <value>Driving time</value>
+  </data>
+  <data name="StatDistance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="StatDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="StatAverageSpeed" xml:space="preserve">
+    <value>Avg. speed</value>
+  </data>
+  <data name="HomeStartRide" xml:space="preserve">
+    <value>Start ride</value>
+  </data>
+  <data name="HomePdfReport" xml:space="preserve">
+    <value>PDF report</value>
+  </data>
+  <data name="ExportPdf" xml:space="preserve">
+    <value>Export to PDF</value>
+  </data>
+  <data name="RideInProgress" xml:space="preserve">
+    <value>Ride in progress – tap to see it</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>This month</value>
+  </data>
+  <data name="RecentRides" xml:space="preserve">
+    <value>Recent rides</value>
+  </data>
+  <data name="SeeAll" xml:space="preserve">
+    <value>See all</value>
+  </data>
+  <data name="EmptyTitle" xml:space="preserve">
+    <value>No rides yet</value>
+  </data>
+  <data name="EmptyMessage" xml:space="preserve">
+    <value>Start your first ride: its distance and duration will show up here.</value>
+  </data>
+  <data name="NewRide" xml:space="preserve">
+    <value>New ride</value>
+  </data>
+  <data name="InterruptedRideTitle" xml:space="preserve">
+    <value>Unfinished ride</value>
+  </data>
+  <data name="InterruptedRideMessage" xml:space="preserve">
+    <value>A ride of {0} was interrupted before it was saved. Do you want to save it?</value>
+  </data>
+  <data name="RideTitle" xml:space="preserve">
+    <value>Ride</value>
+  </data>
+  <data name="StatusReady" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="StatusRecording" xml:space="preserve">
+    <value>Recording</value>
+  </data>
+  <data name="StatusPaused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="GpsIdle" xml:space="preserve">
+    <value>GPS ready</value>
+  </data>
+  <data name="GpsAccuracy" xml:space="preserve">
+    <value>GPS ±{0} m</value>
+  </data>
+  <data name="GpsSearching" xml:space="preserve">
+    <value>Searching for GPS…</value>
+  </data>
+  <data name="StartRide" xml:space="preserve">
+    <value>Start the ride</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="LocationDeniedTitle" xml:space="preserve">
+    <value>Location access needed</value>
+  </data>
+  <data name="LocationDeniedMessage" xml:space="preserve">
+    <value>Car Kilometer needs your location to measure your rides. Allow it in the Settings.</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Open Settings</value>
+  </data>
+  <data name="LocationDisabledTitle" xml:space="preserve">
+    <value>Location is off</value>
+  </data>
+  <data name="LocationDisabledMessage" xml:space="preserve">
+    <value>Turn on location services to record your rides.</value>
+  </data>
+  <data name="GpsStartError" xml:space="preserve">
+    <value>The GPS could not be started. Please try again.</value>
+  </data>
+  <data name="NotificationTitle" xml:space="preserve">
+    <value>Recording your ride</value>
+  </data>
+  <data name="NotificationText" xml:space="preserve">
+    <value>Car Kilometer is measuring the distance of your ride.</value>
+  </data>
+  <data name="SaveRideTitle" xml:space="preserve">
+    <value>Save the ride</value>
+  </data>
+  <data name="EditRideTitle" xml:space="preserve">
+    <value>Edit the ride</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionPlaceholder" xml:space="preserve">
+    <value>e.g. Home – Office</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>Weather</value>
+  </data>
+  <data name="DiscardRide" xml:space="preserve">
+    <value>Don’t save this ride</value>
+  </data>
+  <data name="DeleteRide" xml:space="preserve">
+    <value>Delete this ride</value>
+  </data>
+  <data name="DescriptionRequired" xml:space="preserve">
+    <value>Please describe the ride (e.g. Home – Office).</value>
+  </data>
+  <data name="WeatherRequired" xml:space="preserve">
+    <value>Please choose the weather.</value>
+  </data>
+  <data name="DiscardRideTitle" xml:space="preserve">
+    <value>Discard this ride?</value>
+  </data>
+  <data name="DiscardRideMessage" xml:space="preserve">
+    <value>The recorded distance will be lost.</value>
+  </data>
+  <data name="DeleteRideTitle" xml:space="preserve">
+    <value>Delete this ride?</value>
+  </data>
+  <data name="DeleteRideMessage" xml:space="preserve">
+    <value>This can’t be undone.</value>
+  </data>
+  <data name="HistoryTitle" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Export to PDF</value>
+  </data>
+  <data name="Period" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="PeriodThisMonth" xml:space="preserve">
+    <value>This month</value>
+  </data>
+  <data name="PeriodLastMonth" xml:space="preserve">
+    <value>Last month</value>
+  </data>
+  <data name="PeriodThisYear" xml:space="preserve">
+    <value>This year</value>
+  </data>
+  <data name="PeriodAll" xml:space="preserve">
+    <value>Everything</value>
+  </data>
+  <data name="PeriodCustom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="Recipient" xml:space="preserve">
+    <value>Send to</value>
+  </data>
+  <data name="EmailPlaceholder" xml:space="preserve">
+    <value>name@example.com</value>
+  </data>
+  <data name="SendByEmail" xml:space="preserve">
+    <value>Send by email</value>
+  </data>
+  <data name="SharePdf" xml:space="preserve">
+    <value>Share the PDF</value>
+  </data>
+  <data name="CreatingPdf" xml:space="preserve">
+    <value>Creating the PDF…</value>
+  </data>
+  <data name="NoRidesInPeriod" xml:space="preserve">
+    <value>No rides in this period</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Please enter your first and last name.</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>Please enter a valid email address.</value>
+  </data>
+  <data name="PdfError" xml:space="preserve">
+    <value>The PDF could not be created.</value>
+  </data>
+  <data name="EmailUnavailableTitle" xml:space="preserve">
+    <value>No email app</value>
+  </data>
+  <data name="EmailUnavailableMessage" xml:space="preserve">
+    <value>No email account is set up on this phone. You can share the PDF instead.</value>
+  </data>
+  <data name="EmailSubject" xml:space="preserve">
+    <value>Mileage report {0} – {1}</value>
+  </data>
+  <data name="EmailBody" xml:space="preserve">
+    <value>Hello,
+
+Please find attached my mileage report from {0} to {1} ({2}).
+
+Best regards,
+{3}</value>
+  </data>
+  <data name="PdfTitle" xml:space="preserve">
+    <value>Mileage report</value>
+  </data>
+  <data name="PdfPeriod" xml:space="preserve">
+    <value>Period: {0} – {1}</value>
+  </data>
+  <data name="PdfGeneratedOn" xml:space="preserve">
+    <value>Generated on {0}</value>
+  </data>
+  <data name="PdfSignature" xml:space="preserve">
+    <value>Driver’s signature</value>
+  </data>
+  <data name="PdfColumnNumber" xml:space="preserve">
+    <value>No.</value>
+  </data>
+  <data name="PdfColumnDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="PdfColumnDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PdfColumnWeather" xml:space="preserve">
+    <value>Weather</value>
+  </data>
+  <data name="PdfColumnDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="PdfColumnDistance" xml:space="preserve">
+    <value>Distance (km)</value>
+  </data>
+  <data name="PdfTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="PdfPageNumber" xml:space="preserve">
+    <value>Page {0} of {1}</value>
+  </data>
+  <data name="PdfFileName" xml:space="preserve">
+    <value>Mileage-report</value>
+  </data>
+</root>

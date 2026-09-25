@@ -1,0 +1,2 @@
+"NSLocationWhenInUseUsageDescription" = "Car Kilometer utilise votre position pour mesurer la distance de vos trajets.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Car Kilometer utilise votre position pour continuer à mesurer votre trajet quand l’écran est verrouillé.";
