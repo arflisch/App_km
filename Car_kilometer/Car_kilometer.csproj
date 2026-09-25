@@ -1,17 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>;net8.0-android;net8.0-ios17.5</TargetFrameworks>
-		<!--<TargetFrameworks>$(TargetFrameworks);net8.0-ios</TargetFrameworks>-->
-		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
-
-		<!-- Note for MacCatalyst:
-		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
-		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifier>.
-		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
-		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
-		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+		<TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>Car_kilometer</RootNamespace>
@@ -20,69 +10,61 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-		
-		<!-- Display name -->
-		<ApplicationTitle>Car_kilometer</ApplicationTitle>
 
-		<!-- App Identifier -->
+		<!-- Display name -->
+		<ApplicationTitle>Car Kilometer</ApplicationTitle>
+
+		<!-- App Identifier. Never change it: the rides already stored on the phone belong to this identifier. -->
 		<ApplicationId>com.companyname.car_kilometer</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>
+		<ApplicationVersion>2</ApplicationVersion>
+
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">16.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 
-	</PropertyGroup>
-	<PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
-		<SupportedOSPlatformVersion>14.2</SupportedOSPlatformVersion>
+		<!-- Only ship the languages the app is translated into -->
+		<SatelliteResourceLanguages>en;fr</SatelliteResourceLanguages>
 
-		<!--
-        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-        <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
-        -->
+		<!-- Also compile the bindings that set a Source, so every binding is checked at build time -->
+		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-		<CreatePackage>false</CreatePackage>
-	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#4F46E5" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
-
-		<!-- Images -->
-		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#4F46E5" BaseSize="168,168" />
 
 		<!-- Custom Fonts -->
-		<MauiFont Include="Resources\Fonts\*" />
+		<MauiFont Include="Resources\Fonts\*.ttf" />
 
-		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<!-- The PDF report embeds the app font -->
+		<EmbeddedResource Include="Resources\Fonts\Manrope-Regular.ttf" LogicalName="Pdf.Manrope-Regular.ttf" />
+		<EmbeddedResource Include="Resources\Fonts\Manrope-ExtraBold.ttf" LogicalName="Pdf.Manrope-ExtraBold.ttf" />
+
+		<!-- Strings (English by default, French in AppResources.fr.resx). The AppResources class is generated at build time. -->
+		<EmbeddedResource Update="Resources\Strings\AppResources.resx">
+			<StronglyTypedFileName>$(IntermediateOutputPath)AppResources.Designer.cs</StronglyTypedFileName>
+			<StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+			<StronglyTypedNamespace>Car_kilometer.Resources.Strings</StronglyTypedNamespace>
+			<StronglyTypedClassName>AppResources</StronglyTypedClassName>
+			<PublicClass>true</PublicClass>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.6" />
-		<PackageReference Include="Realm" Version="11.6.1" />
-		<PackageReference Include="Shiny.Locations" Version="3.2.4" />
-		<PackageReference Include="Shiny.Hosting.Maui" version="3.2.4" />
-		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<!-- Pinned: Shiny.Hosting.Maui needs MAUI 10.0.100 or later, and all the MAUI packages must have the same version -->
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.110" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.7" />
+		<PackageReference Include="Realm" Version="20.1.0" />
+		<PackageReference Include="Shiny.Hosting.Maui" Version="5.7.2" />
+		<PackageReference Include="Shiny.Locations" Version="5.7.2" />
+		<!-- Stays on 26.x: the Syncfusion license key registered in App.xaml.cs is only valid for this version -->
 		<PackageReference Include="Syncfusion.Pdf.NET" Version="26.2.11" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<MauiXaml Update="MapPage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
-		<MauiXaml Update="RidesPage.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		</MauiXaml>
 	</ItemGroup>
 
 </Project>

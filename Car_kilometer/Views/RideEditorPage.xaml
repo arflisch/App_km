@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:vm="clr-namespace:Car_kilometer.ViewModels"
+             xmlns:strings="clr-namespace:Car_kilometer.Resources.Strings"
+             xmlns:icons="clr-namespace:Car_kilometer.Resources"
+             x:Class="Car_kilometer.Views.RideEditorPage"
+             x:DataType="vm:RideEditorViewModel"
+             Shell.PresentationMode="ModalAnimated"
+             ios:Page.ModalPresentationStyle="PageSheet">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Grid Padding="20,20,16,8" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Label Text="{Binding Title}" Style="{StaticResource Heading}" VerticalOptions="Center" />
+            <Button Grid.Column="1"
+                    Text="{x:Static icons:Icons.Close}"
+                    Style="{StaticResource IconButton}"
+                    Command="{Binding CloseCommand}"
+                    SemanticProperties.Description="{x:Static strings:AppResources.Close}" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,8,20,16" Spacing="22">
+
+                <!-- What was recorded -->
+                <Border Style="{StaticResource HeroCard}" Padding="20,18">
+                    <VerticalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="{x:Static icons:Icons.Calendar}" Style="{StaticResource Glyph}" TextColor="{StaticResource OnHeroMuted}" FontSize="16" />
+                            <Label Text="{Binding DateText}" TextColor="{StaticResource OnHeroMuted}" FontFamily="ManropeSemiBold" FontSize="13" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout Spacing="3">
+                                    <Label Text="{Binding DistanceText}" TextColor="{StaticResource OnHero}" FontFamily="ManropeExtraBold" FontSize="22" />
+                                    <Label Text="km" TextColor="{StaticResource OnHeroMuted}" FontSize="12" VerticalOptions="End" Margin="0,0,0,4" />
+                                </HorizontalStackLayout>
+                                <Label Text="{x:Static strings:AppResources.StatDistance}" TextColor="{StaticResource OnHeroMuted}" FontSize="12" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="{Binding DurationText}" TextColor="{StaticResource OnHero}" FontFamily="ManropeExtraBold" FontSize="22" />
+                                <Label Text="{x:Static strings:AppResources.StatDuration}" TextColor="{StaticResource OnHeroMuted}" FontSize="12" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="2">
+                                <HorizontalStackLayout Spacing="3">
+                                    <Label Text="{Binding SpeedText}" TextColor="{StaticResource OnHero}" FontFamily="ManropeExtraBold" FontSize="22" />
+                                    <Label Text="km/h" TextColor="{StaticResource OnHeroMuted}" FontSize="12" VerticalOptions="End" Margin="0,0,0,4" />
+                                </HorizontalStackLayout>
+                                <Label Text="{x:Static strings:AppResources.StatAverageSpeed}" TextColor="{StaticResource OnHeroMuted}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Description -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static strings:AppResources.Description}" Style="{StaticResource FieldLabel}" />
+                    <Border Style="{StaticResource InputField}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Entry Text="{Binding Description}"
+                                   Placeholder="{x:Static strings:AppResources.DescriptionPlaceholder}"
+                                   ReturnType="Done"
+                                   ClearButtonVisibility="WhileEditing"
+                                   Keyboard="Text" />
+                            <ActivityIndicator Grid.Column="1"
+                                               IsRunning="{Binding IsLookingUpPlace}"
+                                               IsVisible="{Binding IsLookingUpPlace}"
+                                               WidthRequest="20"
+                                               HeightRequest="20" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Weather -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{x:Static strings:AppResources.Weather}" Style="{StaticResource FieldLabel}" />
+                    <FlexLayout BindableLayout.ItemsSource="{Binding WeatherOptions}" Wrap="Wrap" JustifyContent="SpaceBetween">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:WeatherOption">
+                                <Border Style="{StaticResource Chip}" FlexLayout.Basis="31.5%" Margin="0,0,0,10" Padding="0,12"
+                                        SemanticProperties.Description="{Binding Label}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnWeatherTapped" />
+                                    </Border.GestureRecognizers>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                            <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="{Binding Glyph}" Style="{StaticResource Glyph}" FontSize="26">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label Text="{Binding Label}" FontFamily="ManropeSemiBold" FontSize="13" HorizontalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding HasError}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Actions -->
+        <VerticalStackLayout Grid.Row="2" Padding="20,8,20,12" Spacing="4">
+            <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" />
+            <Button Text="{Binding DiscardText}" Style="{StaticResource DangerTextButton}" Command="{Binding DiscardCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Car_kilometer.ViewModels"
+             xmlns:services="clr-namespace:Car_kilometer.Services"
+             xmlns:controls="clr-namespace:Car_kilometer.Controls"
+             xmlns:strings="clr-namespace:Car_kilometer.Resources.Strings"
+             xmlns:icons="clr-namespace:Car_kilometer.Resources"
+             x:Class="Car_kilometer.Views.RidePage"
+             x:DataType="vm:RideViewModel"
+             Title="{x:Static strings:AppResources.TabRide}">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto" Padding="20,16,20,20" RowSpacing="18">
+
+        <!-- Header -->
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Label Text="{x:Static strings:AppResources.RideTitle}" Style="{StaticResource Title}" VerticalOptions="Center" />
+            <Border Grid.Column="1" Style="{StaticResource Pill}" VerticalOptions="Center">
+                <HorizontalStackLayout Spacing="8">
+                    <BoxView x:Name="StatusDot"
+                             WidthRequest="8"
+                             HeightRequest="8"
+                             CornerRadius="4"
+                             VerticalOptions="Center"
+                             Color="{AppThemeBinding Light={StaticResource TextMutedLight}, Dark={StaticResource TextMutedDark}}">
+                        <BoxView.Triggers>
+                            <DataTrigger TargetType="BoxView" Binding="{Binding State}" Value="{x:Static services:TrackingState.Recording}">
+                                <Setter Property="Color" Value="{StaticResource Danger}" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="BoxView" Binding="{Binding State}" Value="{x:Static services:TrackingState.Paused}">
+                                <Setter Property="Color" Value="{StaticResource Warning}" />
+                            </DataTrigger>
+                        </BoxView.Triggers>
+                    </BoxView>
+                    <Label Text="{Binding StatusText}" FontFamily="ManropeSemiBold" FontSize="13" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Speed -->
+        <Grid Grid.Row="1">
+            <controls:SpeedGauge Value="{Binding Speed}"
+                                 Maximum="160"
+                                 TrackColor="{AppThemeBinding Light={StaticResource TrackLight}, Dark={StaticResource TrackDark}}"
+                                 TickColor="{AppThemeBinding Light={StaticResource TickLight}, Dark={StaticResource TickDark}}"
+                                 StartColor="{StaticResource HeroStart}"
+                                 EndColor="{StaticResource Accent}"
+                                 AutomationProperties.IsInAccessibleTree="False" />
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="0" Margin="0,40,0,0">
+                <Label Text="{Binding SpeedText}"
+                       FontFamily="ManropeExtraBold"
+                       FontSize="76"
+                       HorizontalOptions="Center"
+                       SemanticProperties.Description="{Binding SpeedText, StringFormat='{0} km/h'}" />
+                <Label Text="km/h" Style="{StaticResource Caption}" FontSize="15" HorizontalOptions="Center" Margin="0,-10,0,0" />
+                <!-- GPS status, in the opening at the bottom of the arc -->
+                <Border Style="{StaticResource Pill}" HorizontalOptions="Center" Margin="0,34,0,0" Padding="10,5">
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{Binding GpsGlyph}" Style="{StaticResource Glyph}" FontSize="15" />
+                        <Label Text="{Binding GpsText}" Style="{StaticResource Muted}" FontSize="12.5" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Distance, time, average speed -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,*,*" ColumnSpacing="10">
+            <Border Style="{StaticResource StatTile}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="{x:Static strings:AppResources.StatDistance}" Style="{StaticResource Caption}" FontSize="11" />
+                    <HorizontalStackLayout Spacing="3">
+                        <Label Text="{Binding DistanceText}" Style="{StaticResource StatValue}" FontSize="18" />
+                        <Label Text="km" Style="{StaticResource Muted}" FontSize="11" VerticalOptions="End" Margin="0,0,0,3" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="1" Style="{StaticResource StatTile}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="{x:Static strings:AppResources.StatDuration}" Style="{StaticResource Caption}" FontSize="11" />
+                    <Label Text="{Binding ElapsedText}" Style="{StaticResource StatValue}" FontSize="18" />
+                </VerticalStackLayout>
+            </Border>
+            <Border Grid.Column="2" Style="{StaticResource StatTile}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="{x:Static strings:AppResources.StatAverageSpeed}" Style="{StaticResource Caption}" FontSize="11" />
+                    <HorizontalStackLayout Spacing="3">
+                        <Label Text="{Binding AverageSpeedText}" Style="{StaticResource StatValue}" FontSize="18" />
+                        <Label Text="km/h" Style="{StaticResource Muted}" FontSize="11" VerticalOptions="End" Margin="0,0,0,3" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!-- Controls -->
+        <Grid Grid.Row="3">
+            <Button Text="{x:Static strings:AppResources.StartRide}"
+                    IsVisible="{Binding IsIdle}"
+                    Command="{Binding StartCommand}"
+                    BackgroundColor="{StaticResource Success}"
+                    HeightRequest="64"
+                    CornerRadius="32"
+                    FontSize="18"
+                    ContentLayout="Left,10">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.Play}" Color="{StaticResource White}" Size="28" />
+                </Button.ImageSource>
+            </Button>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" IsVisible="{Binding IsActive}">
+                <Button Text="{x:Static strings:AppResources.Pause}"
+                        IsVisible="{Binding IsRecording}"
+                        Command="{Binding PauseCommand}"
+                        BackgroundColor="{StaticResource Warning}"
+                        HeightRequest="64"
+                        CornerRadius="32"
+                        FontSize="17"
+                        ContentLayout="Left,8">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.Pause}" Color="{StaticResource White}" Size="26" />
+                    </Button.ImageSource>
+                </Button>
+                <Button Text="{x:Static strings:AppResources.Resume}"
+                        IsVisible="{Binding IsPaused}"
+                        Command="{Binding ResumeCommand}"
+                        BackgroundColor="{StaticResource Success}"
+                        HeightRequest="64"
+                        CornerRadius="32"
+                        FontSize="17"
+                        ContentLayout="Left,8">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.Play}" Color="{StaticResource White}" Size="26" />
+                    </Button.ImageSource>
+                </Button>
+                <Button Grid.Column="1"
+                        Text="{x:Static strings:AppResources.Finish}"
+                        Command="{Binding FinishCommand}"
+                        BackgroundColor="{StaticResource Danger}"
+                        HeightRequest="64"
+                        CornerRadius="32"
+                        FontSize="17"
+                        ContentLayout="Left,8">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="Icons" Glyph="{x:Static icons:Icons.Stop}" Color="{StaticResource White}" Size="26" />
+                    </Button.ImageSource>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</ContentPage>

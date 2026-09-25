@@ -28,7 +28,27 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+
+	<!-- Languages of the app (translations of these texts: Resources/*.lproj/InfoPlist.strings) -->
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>fr</string>
+	</array>
+
+	<!-- GPS: asked when the first ride starts; the ride keeps being recorded with the screen locked -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Car Kilometer uses your location to measure the distance of your rides.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Car Kilometer uses your location to keep measuring your ride while the screen is locked.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
+
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

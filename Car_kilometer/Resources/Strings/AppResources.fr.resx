@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppName" xml:space="preserve">
+    <value>Car Kilometer</value>
+  </data>
+  <data name="TabHome" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="TabRide" xml:space="preserve">
+    <value>Trajet</value>
+  </data>
+  <data name="TabHistory" xml:space="preserve">
+    <value>Historique</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Enregistrer</value>
+  </data>
+  <data name="Discard" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Une erreur est survenue</value>
+  </data>
+  <data name="DurationHoursFormat" xml:space="preserve">
+    <value>{0} h {1:00}</value>
+  </data>
+  <data name="DurationMinutesFormat" xml:space="preserve">
+    <value>{0} min</value>
+  </data>
+  <data name="RideCountOne" xml:space="preserve">
+    <value>{0} trajet</value>
+  </data>
+  <data name="RideCountMany" xml:space="preserve">
+    <value>{0} trajets</value>
+  </data>
+  <data name="PeriodRange" xml:space="preserve">
+    <value>Du {0} au {1}</value>
+  </data>
+  <data name="NoDescription" xml:space="preserve">
+    <value>Trajet sans titre</value>
+  </data>
+  <data name="WeatherSunny" xml:space="preserve">
+    <value>Soleil</value>
+  </data>
+  <data name="WeatherCloudy" xml:space="preserve">
+    <value>Nuageux</value>
+  </data>
+  <data name="WeatherRainy" xml:space="preserve">
+    <value>Pluie</value>
+  </data>
+  <data name="WeatherWindy" xml:space="preserve">
+    <value>Vent</value>
+  </data>
+  <data name="WeatherSnowy" xml:space="preserve">
+    <value>Neige</value>
+  </data>
+  <data name="WeatherNight" xml:space="preserve">
+    <value>Nuit</value>
+  </data>
+  <data name="GreetingMorning" xml:space="preserve">
+    <value>Bonjour</value>
+  </data>
+  <data name="GreetingAfternoon" xml:space="preserve">
+    <value>Bonjour</value>
+  </data>
+  <data name="GreetingEvening" xml:space="preserve">
+    <value>Bonsoir</value>
+  </data>
+  <data name="GreetingWithName" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="TotalDistance" xml:space="preserve">
+    <value>Distance totale</value>
+  </data>
+  <data name="StatRides" xml:space="preserve">
+    <value>Trajets</value>
+  </data>
+  <data name="StatDrivingTime" xml:space="preserve">
+    <value>Temps de conduite</value>
+  </data>
+  <data name="StatDistance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="StatDuration" xml:space="preserve">
+    <value>Durée</value>
+  </data>
+  <data name="StatAverageSpeed" xml:space="preserve">
+    <value>Vit. moyenne</value>
+  </data>
+  <data name="HomeStartRide" xml:space="preserve">
+    <value>Démarrer</value>
+  </data>
+  <data name="HomePdfReport" xml:space="preserve">
+    <value>Rapport PDF</value>
+  </data>
+  <data name="ExportPdf" xml:space="preserve">
+    <value>Exporter en PDF</value>
+  </data>
+  <data name="RideInProgress" xml:space="preserve">
+    <value>Trajet en cours – touchez pour l’afficher</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>Ce mois-ci</value>
+  </data>
+  <data name="RecentRides" xml:space="preserve">
+    <value>Trajets récents</value>
+  </data>
+  <data name="SeeAll" xml:space="preserve">
+    <value>Tout voir</value>
+  </data>
+  <data name="EmptyTitle" xml:space="preserve">
+    <value>Aucun trajet pour l’instant</value>
+  </data>
+  <data name="EmptyMessage" xml:space="preserve">
+    <value>Démarrez votre premier trajet : sa distance et sa durée s’afficheront ici.</value>
+  </data>
+  <data name="NewRide" xml:space="preserve">
+    <value>Nouveau trajet</value>
+  </data>
+  <data name="InterruptedRideTitle" xml:space="preserve">
+    <value>Trajet interrompu</value>
+  </data>
+  <data name="InterruptedRideMessage" xml:space="preserve">
+    <value>Un trajet de {0} a été interrompu avant d’être enregistré. Voulez-vous l’enregistrer ?</value>
+  </data>
+  <data name="RideTitle" xml:space="preserve">
+    <value>Trajet</value>
+  </data>
+  <data name="StatusReady" xml:space="preserve">
+    <value>Prêt</value>
+  </data>
+  <data name="StatusRecording" xml:space="preserve">
+    <value>Enregistrement</value>
+  </data>
+  <data name="StatusPaused" xml:space="preserve">
+    <value>En pause</value>
+  </data>
+  <data name="GpsIdle" xml:space="preserve">
+    <value>GPS prêt</value>
+  </data>
+  <data name="GpsAccuracy" xml:space="preserve">
+    <value>GPS ±{0} m</value>
+  </data>
+  <data name="GpsSearching" xml:space="preserve">
+    <value>Recherche du GPS…</value>
+  </data>
+  <data name="StartRide" xml:space="preserve">
+    <value>Démarrer le trajet</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Reprendre</value>
+  </data>
+  <data name="Finish" xml:space="preserve">
+    <value>Terminer</value>
+  </data>
+  <data name="LocationDeniedTitle" xml:space="preserve">
+    <value>Accès à la position requis</value>
+  </data>
+  <data name="LocationDeniedMessage" xml:space="preserve">
+    <value>Car Kilometer a besoin de votre position pour mesurer vos trajets. Autorisez-la dans les Réglages.</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Ouvrir les Réglages</value>
+  </data>
+  <data name="LocationDisabledTitle" xml:space="preserve">
+    <value>Localisation désactivée</value>
+  </data>
+  <data name="LocationDisabledMessage" xml:space="preserve">
+    <value>Activez le service de localisation pour enregistrer vos trajets.</value>
+  </data>
+  <data name="GpsStartError" xml:space="preserve">
+    <value>Le GPS n’a pas pu démarrer. Réessayez.</value>
+  </data>
+  <data name="NotificationTitle" xml:space="preserve">
+    <value>Trajet en cours</value>
+  </data>
+  <data name="NotificationText" xml:space="preserve">
+    <value>Car Kilometer mesure la distance de votre trajet.</value>
+  </data>
+  <data name="SaveRideTitle" xml:space="preserve">
+    <value>Enregistrer le trajet</value>
+  </data>
+  <data name="EditRideTitle" xml:space="preserve">
+    <value>Modifier le trajet</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionPlaceholder" xml:space="preserve">
+    <value>Ex. : Domicile – Bureau</value>
+  </data>
+  <data name="Weather" xml:space="preserve">
+    <value>Météo</value>
+  </data>
+  <data name="DiscardRide" xml:space="preserve">
+    <value>Ne pas enregistrer ce trajet</value>
+  </data>
+  <data name="DeleteRide" xml:space="preserve">
+    <value>Supprimer ce trajet</value>
+  </data>
+  <data name="DescriptionRequired" xml:space="preserve">
+    <value>Décrivez le trajet (ex. : Domicile – Bureau).</value>
+  </data>
+  <data name="WeatherRequired" xml:space="preserve">
+    <value>Choisissez la météo.</value>
+  </data>
+  <data name="DiscardRideTitle" xml:space="preserve">
+    <value>Supprimer ce trajet ?</value>
+  </data>
+  <data name="DiscardRideMessage" xml:space="preserve">
+    <value>La distance enregistrée sera perdue.</value>
+  </data>
+  <data name="DeleteRideTitle" xml:space="preserve">
+    <value>Supprimer ce trajet ?</value>
+  </data>
+  <data name="DeleteRideMessage" xml:space="preserve">
+    <value>Cette action est irréversible.</value>
+  </data>
+  <data name="HistoryTitle" xml:space="preserve">
+    <value>Historique</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Exporter en PDF</value>
+  </data>
+  <data name="Period" xml:space="preserve">
+    <value>Période</value>
+  </data>
+  <data name="PeriodThisMonth" xml:space="preserve">
+    <value>Ce mois-ci</value>
+  </data>
+  <data name="PeriodLastMonth" xml:space="preserve">
+    <value>Mois dernier</value>
+  </data>
+  <data name="PeriodThisYear" xml:space="preserve">
+    <value>Cette année</value>
+  </data>
+  <data name="PeriodAll" xml:space="preserve">
+    <value>Tout</value>
+  </data>
+  <data name="PeriodCustom" xml:space="preserve">
+    <value>Personnalisée</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>Du</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>Au</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Conducteur</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Prénom</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="Recipient" xml:space="preserve">
+    <value>Destinataire</value>
+  </data>
+  <data name="EmailPlaceholder" xml:space="preserve">
+    <value>nom@exemple.com</value>
+  </data>
+  <data name="SendByEmail" xml:space="preserve">
+    <value>Envoyer par e-mail</value>
+  </data>
+  <data name="SharePdf" xml:space="preserve">
+    <value>Partager le PDF</value>
+  </data>
+  <data name="CreatingPdf" xml:space="preserve">
+    <value>Création du PDF…</value>
+  </data>
+  <data name="NoRidesInPeriod" xml:space="preserve">
+    <value>Aucun trajet sur cette période</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Indiquez votre prénom et votre nom.</value>
+  </data>
+  <data name="EmailInvalid" xml:space="preserve">
+    <value>Indiquez une adresse e-mail valide.</value>
+  </data>
+  <data name="PdfError" xml:space="preserve">
+    <value>Le PDF n’a pas pu être créé.</value>
+  </data>
+  <data name="EmailUnavailableTitle" xml:space="preserve">
+    <value>Aucune app e-mail</value>
+  </data>
+  <data name="EmailUnavailableMessage" xml:space="preserve">
+    <value>Aucun compte e-mail n’est configuré sur ce téléphone. Vous pouvez partager le PDF à la place.</value>
+  </data>
+  <data name="EmailSubject" xml:space="preserve">
+    <value>Relevé kilométrique du {0} au {1}</value>
+  </data>
+  <data name="EmailBody" xml:space="preserve">
+    <value>Bonjour,
+
+Vous trouverez ci-joint mon relevé kilométrique du {0} au {1} ({2}).
+
+Bien à vous,
+{3}</value>
+  </data>
+  <data name="PdfTitle" xml:space="preserve">
+    <value>Relevé kilométrique</value>
+  </data>
+  <data name="PdfPeriod" xml:space="preserve">
+    <value>Période : du {0} au {1}</value>
+  </data>
+  <data name="PdfGeneratedOn" xml:space="preserve">
+    <value>Généré le {0}</value>
+  </data>
+  <data name="PdfSignature" xml:space="preserve">
+    <value>Signature du conducteur</value>
+  </data>
+  <data name="PdfColumnNumber" xml:space="preserve">
+    <value>N°</value>
+  </data>
+  <data name="PdfColumnDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="PdfColumnDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PdfColumnWeather" xml:space="preserve">
+    <value>Météo</value>
+  </data>
+  <data name="PdfColumnDuration" xml:space="preserve">
+    <value>Durée</value>
+  </data>
+  <data name="PdfColumnDistance" xml:space="preserve">
+    <value>Distance (km)</value>
+  </data>
+  <data name="PdfTotal" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="PdfPageNumber" xml:space="preserve">
+    <value>Page {0} sur {1}</value>
+  </data>
+  <data name="PdfFileName" xml:space="preserve">
+    <value>Releve-kilometrique</value>
+  </data>
+</root>
