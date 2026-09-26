@@ -14,14 +14,17 @@
 		<!-- Display name -->
 		<ApplicationTitle>Car Kilometer</ApplicationTitle>
 
-		<!-- App Identifier. Never change it: the rides already stored on the phone belong to this identifier. -->
+		<!-- App Identifier. Never change it on Android: the rides already stored on the phone belong to this identifier. -->
 		<ApplicationId>com.companyname.car_kilometer</ApplicationId>
+		<!-- iOS bundle identifiers can't contain "_", so a device build needs its own identifier -->
+		<ApplicationId Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">com.arflisch.carkilometer</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>
 		<ApplicationVersion>2</ApplicationVersion>
 
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<!-- Android 6.0: the AndroidX libraries used by Shiny 5 require API 23 -->
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 
 		<!-- Only ship the languages the app is translated into -->
