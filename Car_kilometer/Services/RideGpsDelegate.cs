@@ -16,10 +16,12 @@ public partial class RideGpsDelegate(RideTracker tracker) : IGpsDelegate
 // The notification Android shows while the ride is recorded in the background.
 public partial class RideGpsDelegate : Shiny.IAndroidForegroundServiceDelegate
 {
-    public void Configure(AndroidX.Core.App.NotificationCompat.Builder builder) => builder
-        .SetContentTitle(AppResources.NotificationTitle)
-        .SetContentText(AppResources.NotificationText)
-        .SetSmallIcon(Resource.Drawable.notification)
-        .SetColor(Android.Graphics.Color.ParseColor("#4F46E5"));
+    public void Configure(AndroidX.Core.App.NotificationCompat.Builder builder)
+    {
+        builder.SetContentTitle(AppResources.NotificationTitle);
+        builder.SetContentText(AppResources.NotificationText);
+        builder.SetSmallIcon(Resource.Drawable.notification);
+        builder.SetColor(Android.Graphics.Color.ParseColor("#4F46E5"));
+    }
 }
 #endif

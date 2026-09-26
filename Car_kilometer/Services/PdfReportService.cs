@@ -122,7 +122,7 @@ public sealed class PdfReportService
         grid.Style.CellPadding = new PdfPaddings(6, 6, 5, 5);
         grid.Columns.Add(6);
 
-        float[] widths = [26, 68, 0, 64, 56, 66];
+        float[] widths = [34, 68, 0, 64, 56, 78];
         for (int i = 0; i < widths.Length; i++)
         {
             if (widths[i] > 0)
@@ -202,9 +202,12 @@ public sealed class PdfReportService
         footer.Graphics.DrawLine(new PdfPen(Line, 0.8f), new PointF(Margin, 4), new PointF(width - Margin, 4));
         footer.Graphics.DrawString(AppResources.AppName, font, brush, new PointF(Margin, 12));
 
-        var pages = new PdfCompositeField(font, brush, AppResources.PdfPageNumber, new PdfPageNumberField(font, brush), new PdfPageCountField(font, brush));
-        var label = string.Format(CultureInfo.CurrentCulture, AppResources.PdfPageNumber, "00", "00");
-        pages.Draw(footer.Graphics, width - Margin - font.MeasureString(label).Width, 12);
+        var pages = new PdfCompositeField(font, brush, AppResources.PdfPageNumber, new PdfPageNumberField(font, brush), new PdfPageCountField(font, brush))
+        {
+            Bounds = new RectangleF(Margin, 12, width - 2 * Margin, FooterHeight - 12),
+            StringFormat = new PdfStringFormat(PdfTextAlignment.Right),
+        };
+        pages.Draw(footer.Graphics, 0, 0);
         return footer;
     }
 

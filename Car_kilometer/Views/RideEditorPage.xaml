@@ -64,6 +64,7 @@
                                    Placeholder="{x:Static strings:AppResources.DescriptionPlaceholder}"
                                    ReturnType="Done"
                                    ClearButtonVisibility="WhileEditing"
+                                   IsTextPredictionEnabled="False"
                                    Keyboard="Text" />
                             <ActivityIndicator Grid.Column="1"
                                                IsRunning="{Binding IsLookingUpPlace}"

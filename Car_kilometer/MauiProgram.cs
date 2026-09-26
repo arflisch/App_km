@@ -25,6 +25,8 @@ namespace Car_kilometer
             builder.Logging.AddDebug();
 #endif
 
+            RemoveNativeInputBorders();
+
             var services = builder.Services;
 
             // GPS readings are delivered to RideGpsDelegate, also in the background
@@ -45,6 +47,28 @@ namespace Car_kilometer
             services.AddTransient<ExportPage>().AddTransient<ExportViewModel>();
 
             return builder.Build();
+        }
+
+        // The text fields are drawn inside a styled Border (InputField style): drop the platform's own frame or underline.
+        static void RemoveNativeInputBorders()
+        {
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("Borderless", (handler, _) =>
+            {
+#if IOS
+                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+#elif ANDROID
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+            });
+
+            Microsoft.Maui.Handlers.DatePickerHandler.Mapper.AppendToMapping("Borderless", (handler, _) =>
+            {
+#if IOS
+                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+#elif ANDROID
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+            });
         }
     }
 }

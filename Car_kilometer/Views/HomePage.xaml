@@ -120,6 +120,7 @@
                                 Direction="Row"
                                 JustifyContent="SpaceBetween"
                                 AlignItems="End"
+                                HeightRequest="136"
                                 Margin="0,18,0,0">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="vm:MonthBar">
