@@ -30,7 +30,8 @@ public sealed class RideRepository
         var folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         _config = new RealmConfiguration(Path.Combine(folder, "my.realm"))
         {
-            SchemaVersion = 12,
+            // 13: Ride.Guide and Ride.RoadTypes (added automatically by Realm, nothing to migrate)
+            SchemaVersion = 13,
             MigrationCallback = MigrateFromOldSchemas,
         };
     }
@@ -67,7 +68,7 @@ public sealed class RideRepository
         return added;
     }
 
-    public async Task UpdateAsync(ObjectId id, string description, string weatherCondition)
+    public async Task UpdateAsync(ObjectId id, string description, string weatherCondition, string guide, RoadType roadTypes)
     {
         var updated = await RunAsync(realm =>
         {
@@ -79,6 +80,8 @@ public sealed class RideRepository
             {
                 ride.Description = description;
                 ride.WeatherCondition = weatherCondition;
+                ride.Guide = guide;
+                ride.RoadTypes = (int)roadTypes;
             });
             _rides = Snapshot(realm);
             return RideItem.From(ride);

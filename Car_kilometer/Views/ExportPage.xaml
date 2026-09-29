@@ -25,8 +25,37 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="20,8,20,16" Spacing="22">
 
+                <!-- Document: roadbook or mileage report (roadbook mode only) -->
+                <VerticalStackLayout Spacing="10" IsVisible="{Binding IsRoadbookAvailable}">
+                    <Label Text="{x:Static strings:AppResources.ReportFormat}" Style="{StaticResource FieldLabel}" />
+                    <FlexLayout BindableLayout.ItemsSource="{Binding Documents}" Wrap="Wrap">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:DocumentOption">
+                                <Border Style="{StaticResource Chip}" Padding="14,9" Margin="0,0,8,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnDocumentTapped" />
+                                    </Border.GestureRecognizers>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                            <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Label Text="{Binding Label}" FontFamily="ManropeSemiBold" FontSize="14">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource White}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+
                 <!-- Period -->
-                <VerticalStackLayout Spacing="10">
+                <VerticalStackLayout Spacing="10" IsVisible="{Binding ShowPeriod}">
                     <Label Text="{x:Static strings:AppResources.Period}" Style="{StaticResource FieldLabel}" />
                     <FlexLayout BindableLayout.ItemsSource="{Binding Periods}" Wrap="Wrap">
                         <BindableLayout.ItemTemplate>

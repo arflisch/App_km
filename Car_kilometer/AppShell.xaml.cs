@@ -11,6 +11,7 @@ namespace Car_kilometer
             // Pages opened on top of the tabs (as sheets on iOS)
             Routing.RegisterRoute("rideeditor", typeof(RideEditorPage));
             Routing.RegisterRoute("export", typeof(ExportPage));
+            Routing.RegisterRoute("roadbook", typeof(RoadbookPage));
         }
     }
 }

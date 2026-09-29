@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:vm="clr-namespace:Car_kilometer.ViewModels"
+             xmlns:strings="clr-namespace:Car_kilometer.Resources.Strings"
+             xmlns:icons="clr-namespace:Car_kilometer.Resources"
+             x:Class="Car_kilometer.Views.RoadbookPage"
+             x:DataType="vm:RoadbookViewModel"
+             Shell.PresentationMode="ModalAnimated"
+             ios:Page.ModalPresentationStyle="PageSheet">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Grid Padding="20,20,16,8" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <Label Text="{x:Static strings:AppResources.RoadbookModeTitle}" Style="{StaticResource Heading}" VerticalOptions="Center" />
+            <Button Grid.Column="1"
+                    Text="{x:Static icons:Icons.Close}"
+                    Style="{StaticResource IconButton}"
+                    Command="{Binding CloseCommand}"
+                    SemanticProperties.Description="{x:Static strings:AppResources.Close}" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,8,20,16" Spacing="22">
+
+                <!-- What it is -->
+                <Border Style="{StaticResource Card}" Padding="16">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border Style="{StaticResource IconBadge}" VerticalOptions="Start">
+                            <Label Text="{x:Static icons:Icons.School}" Style="{StaticResource Glyph}" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{x:Static strings:AppResources.RoadbookIntro}" Style="{StaticResource Muted}" FontSize="14" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- On / off -->
+                <Border Style="{StaticResource Card}" Padding="16,8">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Label Text="{x:Static strings:AppResources.RoadbookEnable}" FontFamily="ManropeSemiBold" VerticalOptions="Center" />
+                        <Switch Grid.Column="1" IsToggled="{Binding IsEnabled}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <VerticalStackLayout Spacing="22" IsVisible="{Binding IsEnabled}">
+                    <!-- Start date -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Static strings:AppResources.RoadbookStart}" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <DatePicker Date="{Binding Start}" />
+                        </Border>
+                        <Label Text="{x:Static strings:AppResources.RoadbookStartHint}" Style="{StaticResource Muted}" />
+                    </VerticalStackLayout>
+
+                    <!-- Guides -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Static strings:AppResources.Guides}" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Entry Text="{Binding Guide1}"
+                                   Placeholder="{x:Static strings:AppResources.Guide1Placeholder}"
+                                   IsTextPredictionEnabled="False"
+                                   ReturnType="Next" />
+                        </Border>
+                        <Border Style="{StaticResource InputField}">
+                            <Entry Text="{Binding Guide2}"
+                                   Placeholder="{x:Static strings:AppResources.Guide2Placeholder}"
+                                   IsTextPredictionEnabled="False"
+                                   ReturnType="Next" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Goal -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Static strings:AppResources.RoadbookGoal}" Style="{StaticResource FieldLabel}" />
+                        <Border Style="{StaticResource InputField}">
+                            <Entry Text="{Binding Goal}" Keyboard="Numeric" ReturnType="Done" />
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding HasError}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" Padding="20,8,20,12">
+            <Button Text="{x:Static strings:AppResources.Save}" Command="{Binding SaveCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

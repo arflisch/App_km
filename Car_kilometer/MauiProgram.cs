@@ -45,6 +45,7 @@ namespace Car_kilometer
             services.AddTransient<HistoryPage>().AddTransient<HistoryViewModel>();
             services.AddTransient<RideEditorPage>().AddTransient<RideEditorViewModel>();
             services.AddTransient<ExportPage>().AddTransient<ExportViewModel>();
+            services.AddTransient<RoadbookPage>().AddTransient<RoadbookViewModel>();
 
             return builder.Build();
         }

@@ -12,6 +12,7 @@ public partial class Ride : IRealmObject
         Description = string.Empty;
         Date = DateTimeOffset.Now;
         WeatherCondition = string.Empty;
+        Guide = string.Empty;
     }
 
     public Ride(string description, double distance, TimeSpan duration, DateTimeOffset date, string weatherCondition)
@@ -22,6 +23,7 @@ public partial class Ride : IRealmObject
         Duration = duration.TotalSeconds;
         Date = date;
         WeatherCondition = weatherCondition;
+        Guide = string.Empty;
     }
 
     [PrimaryKey]
@@ -40,4 +42,10 @@ public partial class Ride : IRealmObject
 
     /// <summary>One of the <see cref="Weather"/> names ("Sunny", "Cloudy"…), or empty.</summary>
     public string WeatherCondition { get; set; }
+
+    /// <summary>Roadbook: name of the guide who accompanied the learner driver, or empty.</summary>
+    public string Guide { get; set; }
+
+    /// <summary>Roadbook: the <see cref="RoadType"/> flags of the ride.</summary>
+    public int RoadTypes { get; set; }
 }

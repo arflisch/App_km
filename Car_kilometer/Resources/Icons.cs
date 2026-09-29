@@ -41,6 +41,16 @@ public static class Icons
     public const string Info = "";
     public const string Warning = "";
 
+    // Roadbook
+    public const string School = "";
+    public const string Book = "";
+    public const string Group = "";
+    public const string Settings = "";
+    public const string Done = "";
+    public const string City = "";
+    public const string Countryside = "";
+    public const string Motorway = "";
+
     public const string Sunny = "";
     public const string Cloud = "";
     public const string Rainy = "";

@@ -394,4 +394,138 @@ Best regards,
   <data name="PdfFileName" xml:space="preserve">
     <value>Mileage-report</value>
   </data>
+  <data name="Roadbook" xml:space="preserve">
+    <value>Roadbook</value>
+  </data>
+  <data name="RoadbookModeTitle" xml:space="preserve">
+    <value>Roadbook mode</value>
+  </data>
+  <data name="RoadbookIntro" xml:space="preserve">
+    <value>For learner drivers practising with a guide: each ride records the guide and the type of road, and the PDF follows the table of the official roadbook.</value>
+  </data>
+  <data name="RoadbookEnable" xml:space="preserve">
+    <value>Enable roadbook mode</value>
+  </data>
+  <data name="RoadbookStart" xml:space="preserve">
+    <value>Start of the training</value>
+  </data>
+  <data name="RoadbookStartHint" xml:space="preserve">
+    <value>Only the rides from this date count (in Wallonia: the date of your pedagogical meeting).</value>
+  </data>
+  <data name="Guides" xml:space="preserve">
+    <value>Guides</value>
+  </data>
+  <data name="Guide" xml:space="preserve">
+    <value>Guide</value>
+  </data>
+  <data name="Guide1Placeholder" xml:space="preserve">
+    <value>Guide 1 (e.g. Mum)</value>
+  </data>
+  <data name="Guide2Placeholder" xml:space="preserve">
+    <value>Guide 2 (optional)</value>
+  </data>
+  <data name="RoadbookGoal" xml:space="preserve">
+    <value>Goal (km)</value>
+  </data>
+  <data name="GuideRequired" xml:space="preserve">
+    <value>Add at least one guide.</value>
+  </data>
+  <data name="GoalInvalid" xml:space="preserve">
+    <value>Enter the number of kilometres to drive.</value>
+  </data>
+  <data name="GuideChoiceRequired" xml:space="preserve">
+    <value>Choose the guide who was with you.</value>
+  </data>
+  <data name="RoadType" xml:space="preserve">
+    <value>Type of road</value>
+  </data>
+  <data name="RoadCity" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="RoadRoad" xml:space="preserve">
+    <value>Road</value>
+  </data>
+  <data name="RoadMotorway" xml:space="preserve">
+    <value>Motorway</value>
+  </data>
+  <data name="RoadbookProgress" xml:space="preserve">
+    <value>{0} / {1} km</value>
+  </data>
+  <data name="RoadbookRemaining" xml:space="preserve">
+    <value>{0} to go · since {1}</value>
+  </data>
+  <data name="RoadbookDone" xml:space="preserve">
+    <value>Goal reached · since {0}</value>
+  </data>
+  <data name="RoadbookInviteTitle" xml:space="preserve">
+    <value>Learning to drive?</value>
+  </data>
+  <data name="RoadbookInviteText" xml:space="preserve">
+    <value>Turn on roadbook mode to track your 1,500 km with your guides.</value>
+  </data>
+  <data name="ReportFormat" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="FormatMileage" xml:space="preserve">
+    <value>Mileage report</value>
+  </data>
+  <data name="RoadbookPeriod" xml:space="preserve">
+    <value>Since {0}</value>
+  </data>
+  <data name="NoRidesInRoadbook" xml:space="preserve">
+    <value>No rides since the start of the roadbook</value>
+  </data>
+  <data name="RoadbookEmailSubject" xml:space="preserve">
+    <value>Roadbook – {0}</value>
+  </data>
+  <data name="RoadbookEmailBody" xml:space="preserve">
+    <value>Hello,
+
+Please find attached my roadbook ({0}).
+
+Best regards,
+{1}</value>
+  </data>
+  <data name="PdfRoadbookTitle" xml:space="preserve">
+    <value>Roadbook</value>
+  </data>
+  <data name="PdfRoadbookSubtitle" xml:space="preserve">
+    <value>Driving licence B · learning with a guide · since {0}</value>
+  </data>
+  <data name="PdfGuides" xml:space="preserve">
+    <value>Guides: {0}</value>
+  </data>
+  <data name="PdfSessions" xml:space="preserve">
+    <value>Sessions</value>
+  </data>
+  <data name="PdfColumnSession" xml:space="preserve">
+    <value>Session</value>
+  </data>
+  <data name="PdfColumnStart" xml:space="preserve">
+    <value>Start + duration</value>
+  </data>
+  <data name="PdfColumnGuide" xml:space="preserve">
+    <value>Guide</value>
+  </data>
+  <data name="PdfColumnRoute" xml:space="preserve">
+    <value>Route, type of road</value>
+  </data>
+  <data name="PdfColumnConditions" xml:space="preserve">
+    <value>Weather conditions</value>
+  </data>
+  <data name="PdfColumnKm" xml:space="preserve">
+    <value>Km</value>
+  </data>
+  <data name="PdfTotals" xml:space="preserve">
+    <value>Totals</value>
+  </data>
+  <data name="PdfLearnerSignature" xml:space="preserve">
+    <value>Learner’s signature</value>
+  </data>
+  <data name="PdfGuideSignature" xml:space="preserve">
+    <value>Signature of {0} (guide)</value>
+  </data>
+  <data name="PdfRoadbookFileName" xml:space="preserve">
+    <value>Roadbook</value>
+  </data>
 </root>

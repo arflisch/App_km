@@ -75,6 +75,83 @@
                     </Border>
                 </VerticalStackLayout>
 
+                <!-- Roadbook: who was the guide -->
+                <VerticalStackLayout Spacing="8" IsVisible="{Binding IsRoadbook}">
+                    <Label Text="{x:Static strings:AppResources.Guide}" Style="{StaticResource FieldLabel}" />
+                    <FlexLayout BindableLayout.ItemsSource="{Binding GuideOptions}" Wrap="Wrap">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:GuideOption">
+                                <Border Style="{StaticResource Chip}" Padding="14,10" Margin="0,0,8,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnGuideTapped" />
+                                    </Border.GestureRecognizers>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                            <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <HorizontalStackLayout Spacing="8">
+                                        <Label Text="{x:Static icons:Icons.Person}" Style="{StaticResource Glyph}" FontSize="18">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label Text="{Binding Name}" FontFamily="ManropeSemiBold" FontSize="14" VerticalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+
+                <!-- Roadbook: kinds of road (several can be picked) -->
+                <VerticalStackLayout Spacing="8" IsVisible="{Binding IsRoadbook}">
+                    <Label Text="{x:Static strings:AppResources.RoadType}" Style="{StaticResource FieldLabel}" />
+                    <FlexLayout BindableLayout.ItemsSource="{Binding RoadTypeOptions}" Wrap="Wrap" JustifyContent="SpaceBetween">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:RoadTypeOption">
+                                <Border Style="{StaticResource Chip}" FlexLayout.Basis="31.5%" Margin="0,0,0,10" Padding="0,12"
+                                        SemanticProperties.Description="{Binding Label}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnRoadTypeTapped" />
+                                    </Border.GestureRecognizers>
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                            <Setter Property="Stroke" Value="{StaticResource Primary}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="{Binding Glyph}" Style="{StaticResource Glyph}" FontSize="26">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label Text="{Binding Label}" FontFamily="ManropeSemiBold" FontSize="13" HorizontalOptions="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="{StaticResource White}" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+
                 <!-- Weather -->
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{x:Static strings:AppResources.Weather}" Style="{StaticResource FieldLabel}" />
