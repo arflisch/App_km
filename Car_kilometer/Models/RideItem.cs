@@ -10,7 +10,9 @@ public sealed record RideItem(
     double DistanceKm,
     TimeSpan Duration,
     DateTimeOffset Date,
-    string WeatherCondition)
+    string WeatherCondition,
+    string Guide = "",
+    RoadType RoadTypes = RoadType.None)
 {
     public static RideItem From(Ride ride) => new(
         ride.Id,
@@ -18,7 +20,9 @@ public sealed record RideItem(
         ride.Distance,
         TimeSpan.FromSeconds(ride.Duration),
         ride.Date,
-        ride.WeatherCondition ?? string.Empty);
+        ride.WeatherCondition ?? string.Empty,
+        ride.Guide ?? string.Empty,
+        (RoadType)ride.RoadTypes);
 
     public DateTime LocalDate => Date.LocalDateTime;
 
@@ -29,7 +33,9 @@ public sealed record RideItem(
     // Display values bound by the ride cards
     public string DisplayDescription => string.IsNullOrWhiteSpace(Description) ? AppResources.NoDescription : Description;
     public string DistanceText => Format.Km(DistanceKm);
-    public string DetailsText => $"{Format.ShortDate(LocalDate)} · {Format.Time(LocalDate)} · {Format.Duration(Duration)}";
+    public string DetailsText => string.IsNullOrEmpty(Guide)
+        ? $"{Format.ShortDate(LocalDate)} · {Format.Time(LocalDate)} · {Format.Duration(Duration)}"
+        : $"{Format.ShortDate(LocalDate)} · {Format.Duration(Duration)} · {Guide}";
     public string SpeedText => Format.Speed(AverageSpeedKmh);
     public string WeatherGlyph => WeatherInfo.Glyph(Weather);
 }

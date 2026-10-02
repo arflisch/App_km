@@ -182,6 +182,11 @@
         <Setter Property="MinimumHeightRequest" Value="48" />
     </Style>
 
+    <Style TargetType="Switch">
+        <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+        <Setter Property="ThumbColor" Value="{StaticResource White}" />
+    </Style>
+
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryOnDark}}" />
     </Style>

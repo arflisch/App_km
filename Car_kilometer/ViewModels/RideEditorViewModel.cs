@@ -9,6 +9,22 @@ public sealed partial class WeatherOption(Weather weather) : ObservableObject
     [ObservableProperty] public partial bool IsSelected { get; set; }
 }
 
+public sealed partial class GuideOption(string name) : ObservableObject
+{
+    public string Name { get; } = name;
+
+    [ObservableProperty] public partial bool IsSelected { get; set; }
+}
+
+public sealed partial class RoadTypeOption(RoadType type) : ObservableObject
+{
+    public RoadType Type { get; } = type;
+    public string Label { get; } = RoadTypeInfo.Label(type);
+    public string Glyph { get; } = RoadTypeInfo.Glyph(type);
+
+    [ObservableProperty] public partial bool IsSelected { get; set; }
+}
+
 /// <summary>Saves a ride that was just recorded (query "Draft"), or edits a saved one (query "Ride").</summary>
 public sealed partial class RideEditorViewModel : ObservableObject, IQueryAttributable
 {
@@ -16,18 +32,27 @@ public sealed partial class RideEditorViewModel : ObservableObject, IQueryAttrib
     readonly RideTracker _tracker;
     readonly PlaceNameService _places;
     readonly DialogService _dialogs;
+    readonly UserSettings _settings;
     RideDraft? _draft;
     RideItem? _ride;
 
-    public RideEditorViewModel(RideRepository repository, RideTracker tracker, PlaceNameService places, DialogService dialogs)
+    public RideEditorViewModel(RideRepository repository, RideTracker tracker, PlaceNameService places, DialogService dialogs, UserSettings settings)
     {
         _repository = repository;
         _tracker = tracker;
         _places = places;
         _dialogs = dialogs;
+        _settings = settings;
     }
 
     public IReadOnlyList<WeatherOption> WeatherOptions { get; } = WeatherInfo.Choices.Select(w => new WeatherOption(w)).ToArray();
+
+    public IReadOnlyList<RoadTypeOption> RoadTypeOptions { get; } = RoadTypeInfo.Choices.Select(t => new RoadTypeOption(t)).ToArray();
+
+    // Roadbook: shown when the mode is on, or when editing a ride that has roadbook data
+    [ObservableProperty] public partial bool IsRoadbook { get; set; }
+    [ObservableProperty] public partial IReadOnlyList<GuideOption> GuideOptions { get; set; } = [];
+    [ObservableProperty] public partial string SelectedGuide { get; set; } = string.Empty;
 
     [ObservableProperty] public partial string Title { get; set; } = string.Empty;
     [ObservableProperty] public partial string DiscardText { get; set; } = string.Empty;
@@ -52,6 +77,9 @@ public sealed partial class RideEditorViewModel : ObservableObject, IQueryAttrib
             Title = AppResources.SaveRideTitle;
             DiscardText = AppResources.DiscardRide;
             Show(draft.DistanceKm, draft.Duration, draft.StartedAt.LocalDateTime);
+            IsRoadbook = _settings.RoadbookEnabled;
+            var guides = _settings.Guides;
+            SetGuides(guides, guides.Count == 1 ? guides[0] : guides.FirstOrDefault(g => g == _settings.LastGuide) ?? string.Empty);
             _ = SuggestDescriptionAsync(draft);
         }
         else if (query.TryGetValue("Ride", out value) && value is RideItem ride)
@@ -62,7 +90,31 @@ public sealed partial class RideEditorViewModel : ObservableObject, IQueryAttrib
             Show(ride.DistanceKm, ride.Duration, ride.LocalDate);
             Description = ride.Description;
             SelectedWeather = ride.Weather;
+            IsRoadbook = _settings.RoadbookEnabled || ride.Guide.Length > 0 || ride.RoadTypes != RoadType.None;
+            SetGuides(_settings.Guides, ride.Guide);
+            foreach (var option in RoadTypeOptions)
+                option.IsSelected = ride.RoadTypes.HasFlag(option.Type);
         }
+    }
+
+    public void SelectGuide(GuideOption option) => SelectedGuide = option.Name;
+
+    public void ToggleRoadType(RoadTypeOption option) => option.IsSelected = !option.IsSelected;
+
+    partial void OnSelectedGuideChanged(string value)
+    {
+        Error = null;
+        foreach (var option in GuideOptions)
+            option.IsSelected = option.Name == value;
+    }
+
+    void SetGuides(IReadOnlyList<string> guides, string selected)
+    {
+        // Keep the guide of an older ride selectable even if the settings changed since
+        var names = selected.Length > 0 && !guides.Contains(selected) ? [.. guides, selected] : guides;
+        GuideOptions = names.Select(name => new GuideOption(name)).ToArray();
+        SelectedGuide = selected;
+        OnSelectedGuideChanged(selected);
     }
 
     public void SelectWeather(WeatherOption option) => SelectedWeather = option.Weather;
@@ -89,18 +141,33 @@ public sealed partial class RideEditorViewModel : ObservableObject, IQueryAttrib
             Error = AppResources.WeatherRequired;
             return;
         }
+        if (_draft is not null && IsRoadbook && GuideOptions.Count > 0 && SelectedGuide.Length == 0)
+        {
+            Error = AppResources.GuideChoiceRequired;
+            return;
+        }
 
+        var roadTypes = RoadTypeOptions.Where(o => o.IsSelected).Aggregate(RoadType.None, (types, o) => types | o.Type);
         if (_draft is { } draft)
         {
-            var ride = new Ride(description, Math.Round(draft.DistanceKm, 3), draft.Duration, draft.StartedAt, WeatherInfo.ToStored(SelectedWeather));
+            // Read before saving: once added, the Ride belongs to a Realm instance that is closed right after
+            var guide = IsRoadbook ? SelectedGuide : string.Empty;
+            var ride = new Ride(description, Math.Round(draft.DistanceKm, 3), draft.Duration, draft.StartedAt, WeatherInfo.ToStored(SelectedWeather))
+            {
+                Guide = guide,
+                RoadTypes = IsRoadbook ? (int)roadTypes : 0,
+            };
             await _repository.AddAsync(ride);
+            if (guide.Length > 0)
+                _settings.LastGuide = guide;
             _tracker.Reset();
         }
         else if (_ride is { } ride)
         {
             // Keep what was stored when no weather is picked (rides from the first versions have none)
             var weather = SelectedWeather == Weather.Unknown ? ride.WeatherCondition : WeatherInfo.ToStored(SelectedWeather);
-            await _repository.UpdateAsync(ride.Id, description, weather);
+            var guide = IsRoadbook ? SelectedGuide : ride.Guide;
+            await _repository.UpdateAsync(ride.Id, description, weather, guide, IsRoadbook ? roadTypes : ride.RoadTypes);
         }
 
         await Shell.Current.GoToAsync("..");

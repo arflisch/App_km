@@ -15,6 +15,7 @@ public sealed partial class HomeViewModel : ObservableObject
     readonly DialogService _dialogs;
     bool _isDirty = true;
     bool _interruptedRideChecked;
+    IReadOnlyList<RideItem> _rides = [];
 
     public HomeViewModel(RideRepository repository, RideTracker tracker, UserSettings settings, DialogService dialogs)
     {
@@ -39,6 +40,14 @@ public sealed partial class HomeViewModel : ObservableObject
     [ObservableProperty] public partial bool IsEmpty { get; set; }
     [ObservableProperty] public partial bool IsRecording { get; set; }
 
+    // Roadbook card (learner drivers), or an invitation to turn the mode on
+    [ObservableProperty] public partial bool IsRoadbookEnabled { get; set; }
+    [ObservableProperty] public partial bool ShowRoadbookInvite { get; set; }
+    [ObservableProperty] public partial string RoadbookKm { get; set; } = string.Empty;
+    [ObservableProperty] public partial double RoadbookRatio { get; set; }
+    [ObservableProperty] public partial string RoadbookDetails { get; set; } = string.Empty;
+    [ObservableProperty] public partial bool IsRoadbookComplete { get; set; }
+
     public async Task OnAppearingAsync()
     {
         var now = DateTime.Now;
@@ -56,8 +65,11 @@ public sealed partial class HomeViewModel : ObservableObject
         if (_isDirty)
         {
             _isDirty = false;
-            Update(await _repository.GetRidesAsync(), now);
+            _rides = await _repository.GetRidesAsync();
+            Update(_rides, now);
         }
+        // Settings may have changed in the roadbook sheet: cheap to recompute every time
+        UpdateRoadbook();
 
         if (!_interruptedRideChecked)
         {
@@ -74,6 +86,9 @@ public sealed partial class HomeViewModel : ObservableObject
 
     [RelayCommand]
     Task ShowHistory() => Shell.Current.GoToAsync("//history");
+
+    [RelayCommand]
+    Task OpenRoadbook() => Shell.Current.GoToAsync("roadbook");
 
     public Task OpenRideAsync(RideItem ride) =>
         Shell.Current.GoToAsync("rideeditor", new ShellNavigationQueryParameters { ["Ride"] = ride });
@@ -119,6 +134,23 @@ public sealed partial class HomeViewModel : ObservableObject
 
         MonthDistance = Format.Number(kilometers[5]);
         MonthDetails = $"{Format.RideCount(rideCount)} · {Format.Duration(thisMonthTime)}";
+    }
+
+    void UpdateRoadbook()
+    {
+        IsRoadbookEnabled = _settings.RoadbookEnabled;
+        ShowRoadbookInvite = !IsRoadbookEnabled;
+        if (!IsRoadbookEnabled)
+            return;
+
+        var progress = Roadbook.Progress(_rides, _settings);
+        var culture = CultureInfo.CurrentCulture;
+        RoadbookKm = string.Format(culture, AppResources.RoadbookProgress, Format.Number(progress.Km), Format.Number(progress.GoalKm, 0));
+        RoadbookRatio = progress.Ratio;
+        IsRoadbookComplete = progress.IsComplete;
+        RoadbookDetails = progress.IsComplete
+            ? string.Format(culture, AppResources.RoadbookDone, Format.Date(progress.Start))
+            : string.Format(culture, AppResources.RoadbookRemaining, Format.Km(progress.RemainingKm), Format.Date(progress.Start));
     }
 
     async Task OfferInterruptedRideAsync()
